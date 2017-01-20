@@ -1,0 +1,40 @@
+
+style "ukui-calendar-button-style"
+{
+    text[NORMAL] = "#ffffff"
+    text[PRELIGHT] = "#ffffff"
+    text[ACTIVE] = "#ffffff"
+    fg[NORMAL] = "#ffffff"
+    fg[PRELIGHT] = "#ffffff"
+    fg[ACTIVE] = "#ffffff"
+
+    engine "pixmap"
+    {
+        image
+        {
+            function = BOX
+            stretch = TRUE
+            state = NORMAL
+            file  = "calendar-button-bg.png"
+        }
+
+        image
+        {
+            function = BOX
+            stretch = TRUE
+            state = PRELIGHT
+            file  = "calendar-button-bg.png"
+        }
+
+        image
+        {
+            function = BOX
+            stretch = TRUE
+            state = ACTIVE
+            file  = "calendar-button-bg.png"
+        }
+    }
+}
+
+widget "*.ukui-time-button" style "ukui-calendar-button-style"
+widget "*.ukui-time-label" style "ukui-calendar-button-style"

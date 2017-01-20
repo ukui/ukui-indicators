@@ -1,0 +1,23 @@
+Source: ukui-indicators
+Section: x11
+Priority: optional
+Maintainer: Kylin Team <ukui@kylinos.cn>
+Build-Depends: debhelper (>= 9),
+               cmake,
+               libwebkitgtk-3.0-dev,
+               libx11-dev,
+               libwnck-3-dev,
+               libukui-panel-applet-dev
+Standards-Version: 3.9.8
+Homepage: https://github.com/ukui/ukui-indicators
+
+Package: ukui-indicators
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         libwebkitgtk-3.0-0,
+         libukui-panel-applet-4-1,
+         libwnck-3-0,
+         gir1.2-gtk-3.0,
+         gnome-system-tools
+Description: no description

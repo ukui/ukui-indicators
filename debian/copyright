@@ -1,0 +1,35 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: ukui-indicators
+Source: https://github.com/ukui/ukui-indicators
+
+Files: *
+Copyright: 2016,Tianjin UKUI Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/fixedtip.h
+       indicator-application/fixedtip.c
+       indicator-application/ia-marshal.h
+       indicator-application/ia-marshal.c
+       indicator-application/na-tray-child.h
+       indicator-application/na-tray-child.c
+       indicator-application/na-tray.h
+       indicator-application/na-tray.c
+       indicator-application/na-tray-manager.h
+       indicator-application/na-tray-manager.c
+Copyright: 2007-2014, Clement Lefebvre <root@linuxmint.com>
+           2015-2016, Martin Wimpress <code@ubuntu-ukui.org>
+           2016, Sorokin Alexei <sor.alexei@meowr.ru>
+           2016,Tianjin UKUI Information Technology Co., Ltd.
+License: GPL-2+
+
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .

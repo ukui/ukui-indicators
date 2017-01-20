@@ -1,0 +1,36 @@
+<schemalist gettext-domain="ukui-indicators">
+  <schema id="org.ukui.panel.indicator.calendar" path="/org/ukui/panel/indicator/calendar/">
+    <key name="use-24h-format" type="b">
+      <default>true</default>
+      <summary>time format</summary>
+      <description>time format</description>
+    </key>
+    <key name="show-second" type="b">
+      <default>false</default>
+      <summary>whether to show second in clock</summary>
+      <description>whether to show second in clock</description>
+    </key>
+    <key name="show-lunar-date" type="b">
+      <default>true</default>
+      <summary>whether to use lunar calendar for Chinese</summary>
+      <description>whether to use lunar calendar for Chinese</description>
+    </key>
+    <key name="sunday-as-first" type="b">
+      <default>false</default>
+      <summary>whether to put sunday as the first day of a week</summary>
+      <description>whether to put sunday as the first day of a week</description>
+    </key>
+    <key name="theme" type="s">
+      <default>'ukui'</default>
+      <summary>color theme to use, ukui or arm64</summary>
+      <description>color theme to use, ukui or arm64</description>
+    </key>
+  </schema>
+  <schema id="org.ukui.panel.indicator.application" path="/org/ukui/panel/indicator/application/">
+    <key name="icon-draggable" type="b">
+        <default>false</default>
+        <summary>let user drag icons or not</summary>
+        <description>let user drag icons or not</description>
+    </key>
+  </schema>
+</schemalist>
