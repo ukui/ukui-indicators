@@ -3,9 +3,10 @@
 #include <gtk/gtk.h>
 #include <ukui-panel-applet.h>
 #include <string.h>
+#include <cairo.h>
 
 
-static void applet_change_background(UkuiPanelApplet* applet, UkuiPanelAppletBackgroundType type, GdkColor* color, IndicatorApplication *d);
+static void applet_change_background(UkuiPanelApplet* applet, UkuiPanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, IndicatorApplication *d);
 static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorApplication *d);
 static void force_no_focus_padding(GtkWidget* widget);
 
@@ -53,7 +54,7 @@ static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorAppl
         int padding1 = (size - d->icon_size) / 2;
         int padding2 = size - d->icon_size - padding1;
         if (d->orientation == GTK_ORIENTATION_HORIZONTAL)
-            gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), padding1, padding2, 0, 0);
+            gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), 0, 0, 0, 0);
         else
             gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), 0, 0, padding1, padding2);
     }
@@ -63,6 +64,7 @@ static void
 applet_change_background(UkuiPanelApplet* applet,
                          UkuiPanelAppletBackgroundType type,
                          GdkColor* color,
+                         cairo_pattern_t *pattern,
                          IndicatorApplication *d)
 {
     g_return_if_fail(d);

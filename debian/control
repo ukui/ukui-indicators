@@ -6,6 +6,7 @@ Build-Depends: debhelper (>= 9),
                cmake,
                libwebkitgtk-3.0-dev,
                libx11-dev,
+               python3,
                libwnck-3-dev,
                libukui-panel-applet-dev
 Standards-Version: 3.9.8
@@ -18,6 +19,8 @@ Depends: ${shlibs:Depends},
          libwebkitgtk-3.0-0,
          libukui-panel-applet-4-1,
          libwnck-3-0,
+         python3,
          gir1.2-gtk-3.0,
          gnome-system-tools
-Description: no description
+Description: notify area
+	use to notify user.
