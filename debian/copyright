@@ -6,7 +6,7 @@ Files: *
 Copyright: 2007-2014, Clement Lefebvre <root@linuxmint.com>
            2015-2016, Martin Wimpress <code@ubuntu-ukui.org>
            2016, Sorokin Alexei <sor.alexei@meowr.ru>
-           2016,Tianjin UKUI Information Technology Co., Ltd.
+           2016,Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
 Files: indicator-application/fixedtip.h
@@ -22,7 +22,7 @@ Files: indicator-application/fixedtip.h
 Copyright: 2007-2014, Clement Lefebvre <root@linuxmint.com>
            2015-2016, Martin Wimpress <code@ubuntu-ukui.org>
            2016, Sorokin Alexei <sor.alexei@meowr.ru>
-           2016,Tianjin UKUI Information Technology Co., Ltd.
+           2016,Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
 License: GPL-2+
