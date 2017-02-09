@@ -1,3 +1,9 @@
+ukui-indicators (0.9.3) yakkety; urgency=medium
+
+  * modify readme. 
+
+ -- penghuan (penghuan) <penghuan@kylinos.cn>  Thu, 09 Feb 2017 17:35:38 +0800
+
 ukui-indicators (0.9.2) yakkety; urgency=medium
 
   * resolve lintian warnings. 
