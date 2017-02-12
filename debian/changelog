@@ -1,3 +1,9 @@
+ukui-indicators (1.0.0) zesty; urgency=medium
+
+  * New release. 
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sun, 12 Feb 2017 14:28:23 +0800
+
 ukui-indicators (0.9.3) yakkety; urgency=medium
 
   * modify readme. 
