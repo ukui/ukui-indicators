@@ -1,5 +1,5 @@
 <schemalist gettext-domain="ukui-indicators">
-  <schema id="org.ukui.panel.indicator.calendar" path="/org/ukui/panel/indicator/calendar/">
+  <schema id="org.mate.panel.indicator.calendar" path="/org/mate/panel/indicator/calendar/">
     <key name="use-24h-format" type="b">
       <default>true</default>
       <summary>time format</summary>
@@ -26,7 +26,7 @@
       <description>color theme to use, ukui or arm64</description>
     </key>
   </schema>
-  <schema id="org.ukui.panel.indicator.application" path="/org/ukui/panel/indicator/application/">
+  <schema id="org.mate.panel.indicator.application" path="/org/mate/panel/indicator/application/">
     <key name="icon-draggable" type="b">
         <default>false</default>
         <summary>let user drag icons or not</summary>

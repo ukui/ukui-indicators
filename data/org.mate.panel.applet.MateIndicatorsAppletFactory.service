@@ -1,3 +1,3 @@
 [D-BUS Service]
-Name=org.ukui.panel.applet.UkuiIndicatorsAppletFactory
+Name=org.mate.panel.applet.MateIndicatorsAppletFactory
 Exec=@INSTALL_LIBEXEC_DIR@/ukui-indicators

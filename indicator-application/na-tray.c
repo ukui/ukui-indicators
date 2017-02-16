@@ -127,9 +127,9 @@ const char *ordered_roles[] = {
 
 const char *wmclass_roles[] = {
   "Bluetooth-applet", "bluetooth",
-  "ukui-volume-control-applet", "volume",
+  "mate-volume-control-applet", "volume",
   "Nm-applet", "network",
-  "ukui-power-manager", "battery",
+  "mate-power-manager", "battery",
   "keyboard", "keyboard",
   NULL,
 };

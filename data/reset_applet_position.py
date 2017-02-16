@@ -54,16 +54,16 @@ class PanelMonitor:
             return False
 
     def _tray_settings(self):
-        panel_settings = Gio.Settings.new('org.ukui.panel')
+        panel_settings = Gio.Settings.new('org.mate.panel')
         panel_objects = panel_settings.get_strv('object-id-list')
 
         tray_settings = None
         for obj_name in panel_objects:
-            obj_settings = Gio.Settings.new_with_path('org.ukui.panel.object',
-                                                      '/org/ukui/panel/objects/%s/' % obj_name)
+            obj_settings = Gio.Settings.new_with_path('org.mate.panel.object',
+                                                      '/org/mate/panel/objects/%s/' % obj_name)
             applet_iid = obj_settings.get_string('applet-iid')
     
-            if applet_iid == 'UkuiIndicatorsAppletFactory::UkuiIndicatorsApplet':
+            if applet_iid == 'MateIndicatorsAppletFactory::MateIndicatorsApplet':
                 tray_settings = obj_settings
                 break
 
@@ -74,7 +74,7 @@ class PanelMonitor:
         self.set_tray_position()
         time.sleep(1)
         try:
-            subprocess.call('killall ukui-panel',
+            subprocess.call('killall mate-panel',
                             stdout = subprocess.DEVNULL,
                             stderr = subprocess.DEVNULL,
                             shell = True)

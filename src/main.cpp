@@ -115,7 +115,7 @@ void log_handler(const gchar *log_domain, GLogLevelFlags log_level, const gchar 
 static gboolean
 applet_factory(MatePanelApplet *applet, const gchar *iid, gpointer user_data)
 {
-    if (std::string(iid) != "UkuiIndicatorsApplet")
+    if (std::string(iid) != "MateIndicatorsApplet")
         return FALSE;
 
 #ifndef NDEBUG
@@ -134,8 +134,8 @@ applet_factory(MatePanelApplet *applet, const gchar *iid, gpointer user_data)
     return TRUE;
 }
 
-MATE_PANEL_APPLET_OUT_PROCESS_FACTORY("UkuiIndicatorsAppletFactory",
+MATE_PANEL_APPLET_OUT_PROCESS_FACTORY("MateIndicatorsAppletFactory",
                                       PANEL_TYPE_APPLET,
-                                      "UkuiIndicatorsApplet",
+                                      "MateIndicatorsApplet",
                                       applet_factory,
                                       NULL)

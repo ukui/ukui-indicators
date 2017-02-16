@@ -31,8 +31,8 @@ IndicatorCalendar::IndicatorCalendar(AppletData *ad) :
     has_cursor(FALSE),
     button_pressed(FALSE)
 {
-    settings = g_settings_new("org.ukui.panel.indicator.calendar");
-    panel_settings = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
+    settings = g_settings_new("org.mate.panel.indicator.calendar");
+    panel_settings = g_settings_new_with_path("org.mate.panel.toplevel", "/org/mate/panel/toplevels/bottom/");
     use_24h_format = g_settings_get_boolean(settings, "use-24h-format");
     show_second = g_settings_get_boolean(settings, "show-second");
     gchar *text = g_settings_get_string(settings, "theme");
