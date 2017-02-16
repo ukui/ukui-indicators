@@ -12,7 +12,7 @@ static void show_desktop_changed_cb(WnckScreen* screen, IndicatorDesktop *d);
 static gboolean on_button_press(GtkWidget* widget, GdkEventButton* event, IndicatorDesktop *d);
 static gboolean on_button_release(GtkWidget* widget, GdkEventButton* event, IndicatorDesktop *d);
 static gboolean button_hover_callback(GtkWidget *event_box, GdkEvent *event, IndicatorDesktop *d);
-static void applet_size_changed(UkuiPanelApplet *applet, guint size, IndicatorDesktop *d);
+static void applet_size_changed(MatePanelApplet *applet, guint size, IndicatorDesktop *d);
 
 static const double WidthHeightRatio = 0.4;
 static const int HoverDelay = 400; // wait for 400ms to trigger showing desktop
@@ -26,7 +26,7 @@ IndicatorDesktop::IndicatorDesktop(AppletData *ad) :
     hover_blocked(FALSE),
     showing_desktop(FALSE)
 {
-    size = ukui_panel_applet_get_size(applet);
+    size = mate_panel_applet_get_size(applet);
     change_size_handler_id = g_signal_connect(applet, "change_size",
                                               G_CALLBACK(applet_size_changed), this);
 
@@ -163,7 +163,7 @@ on_button_press(GtkWidget* widget, GdkEventButton* event, IndicatorDesktop *d)
 }
 
 static void
-applet_size_changed(UkuiPanelApplet *applet, guint size, IndicatorDesktop *d)
+applet_size_changed(MatePanelApplet *applet, guint size, IndicatorDesktop *d)
 {
     d->size = size;
     d->set_button_state(StateNormal);

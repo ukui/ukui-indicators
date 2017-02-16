@@ -11,7 +11,7 @@ public:
     IndicatorApplication(AppletData *ad);
     ~IndicatorApplication();
 
-    UkuiPanelApplet *applet;
+    MatePanelApplet *applet;
     GtkWidget *event_box;
     GtkWidget *alignment;
     GtkOrientation orientation;

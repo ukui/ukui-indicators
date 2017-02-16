@@ -22,7 +22,7 @@
 #include <config.h>
 #include <string.h>
 
-#include <ukui-panel-applet.h>
+#include <mate-panel-applet.h>
 
 #include <gtk/gtk.h>
 

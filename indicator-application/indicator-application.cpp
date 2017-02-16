@@ -1,13 +1,13 @@
 #include "indicator-application.h"
 
 #include <gtk/gtk.h>
-#include <ukui-panel-applet.h>
+#include <mate-panel-applet.h>
 #include <string.h>
 #include <cairo.h>
 
 
-static void applet_change_background(UkuiPanelApplet* applet, UkuiPanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, IndicatorApplication *d);
-static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorApplication *d);
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, IndicatorApplication *d);
+static void applet_size_changed(MatePanelApplet* applet, int size, IndicatorApplication *d);
 static void force_no_focus_padding(GtkWidget* widget);
 
 
@@ -32,7 +32,7 @@ IndicatorApplication::IndicatorApplication(AppletData *ad) :
     change_size_handler_id = g_signal_connect(applet, "change_size",
                                               G_CALLBACK(applet_size_changed), this);
 
-    applet_size_changed(applet, ukui_panel_applet_get_size(applet), this);
+    applet_size_changed(applet, mate_panel_applet_get_size(applet), this);
 }
 
 IndicatorApplication::~IndicatorApplication()
@@ -41,7 +41,7 @@ IndicatorApplication::~IndicatorApplication()
     g_signal_handler_disconnect(applet, change_size_handler_id);
 }
 
-static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorApplication *d)
+static void applet_size_changed(MatePanelApplet* applet, int size, IndicatorApplication *d)
 {
     if (d->orientation == GTK_ORIENTATION_HORIZONTAL)
         gtk_widget_set_size_request(d->event_box, -1, size);
@@ -61,8 +61,8 @@ static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorAppl
 }
 
 static void
-applet_change_background(UkuiPanelApplet* applet,
-                         UkuiPanelAppletBackgroundType type,
+applet_change_background(MatePanelApplet* applet,
+                         MatePanelAppletBackgroundType type,
                          GdkColor* color,
                          cairo_pattern_t *pattern,
                          IndicatorApplication *d)

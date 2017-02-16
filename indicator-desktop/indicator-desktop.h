@@ -13,7 +13,7 @@ public:
 
     void set_button_state(AppletState state);
 
-    UkuiPanelApplet *applet;
+    MatePanelApplet *applet;
     GtkWidget *event_box;
     GtkWidget *image;
     GtkOrientation orientation;

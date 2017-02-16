@@ -8,7 +8,7 @@ include_directories(
     ../indicator-calendar
     ../indicator-desktop
     ${PROJECT_BINARY_DIR}
-    ${UKUI_PANEL_APPLET_INCLUDE_DIRS}
+    ${MATE_PANEL_APPLET_INCLUDE_DIRS}
     ${GTK_INCLUDE_DIRS})
 
 target_link_libraries(
@@ -16,7 +16,7 @@ target_link_libraries(
     indicator-application
     indicator-calendar
     indicator-desktop
-    ${UKUI_PANEL_APPLET_LIBRARIES}
+    ${MATE_PANEL_APPLET_LIBRARIES}
     ${GTK_LIBRARIES})
 
 install(TARGETS ukui-indicators

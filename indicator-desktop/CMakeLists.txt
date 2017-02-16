@@ -10,13 +10,13 @@ add_definitions(-DPIXMAPS_DIR="${PACKAGE_DATA_DIR}/indicator-desktop")
 include_directories(
     ${PROJECT_BINARY_DIR}
     ${WNCK_INCLUDE_DIRS}
-    ${UKUI_PANEL_APPLET_INCLUDE_DIRS}
+    ${MATE_PANEL_APPLET_INCLUDE_DIRS}
     ${GTK_INCLUDE_DIRS})
 
 target_link_libraries(
     indicator-desktop
     ${WNCK_LIBRARIES}
-    ${UKUI_PANEL_APPLET_LIBRARIES}
+    ${MATE_PANEL_APPLET_LIBRARIES}
     ${GTK_LIBRARIES})
 
 install(FILES show-desktop-normal.png show-desktop-hovered.png show-desktop-pressed.png

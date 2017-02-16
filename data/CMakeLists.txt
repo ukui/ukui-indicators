@@ -12,7 +12,7 @@ install(FILES org.ukui.panel.indicators.gschema.xml
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.ukui.panel.UkuiIndicatorsApplet.ukui-panel-applet
-        DESTINATION ${UKUI_PANEL_APPLETS_DIR}
+        DESTINATION ${MATE_PANEL_APPLETS_DIR}
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.ukui.panel.applet.UkuiIndicatorsAppletFactory.service

@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9),
                libx11-dev,
                python3,
                libwnck-3-dev,
-               libukui-panel-applet-dev
+               libmate-panel-applet-dev
 Standards-Version: 3.9.8
 Homepage: https://github.com/ukui/ukui-indicators
 
@@ -17,7 +17,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libwebkitgtk-3.0-0,
-         libukui-panel-applet-4-1,
+         libmate-panel-applet-4-1,
          libwnck-3-0,
          python3,
          gir1.2-gtk-3.0,

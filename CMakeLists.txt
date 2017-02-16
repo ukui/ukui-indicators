@@ -11,8 +11,8 @@ set(INSTALL_LIBEXEC_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${PROJEC
 set(PACKAGE_DATA_DIR "/usr/share/${PROJECT_NAME}")
 set(GSETTINGS_SCHEMAS_DIR "/usr/share/glib-2.0/schemas")
 set(DBUS_SERVICE_DIR "/usr/share/dbus-1/services")
-set(UKUI_PANEL_DATA_DIR "/usr/share/ukui-panel")
-set(UKUI_PANEL_APPLETS_DIR ${UKUI_PANEL_DATA_DIR}/applets)
+set(MATE_PANEL_DATA_DIR "/usr/share/mate-panel")
+set(MATE_PANEL_APPLETS_DIR ${MATE_PANEL_DATA_DIR}/applets)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_definitions(-DNDEBUG)
@@ -24,7 +24,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -Wall -Wextra -std=c++11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-parameter -Wno-unused-variable")
 
 pkg_check_modules(GTK REQUIRED gtk+-3.0)
-pkg_check_modules(UKUI_PANEL_APPLET REQUIRED libukuipanelapplet-4.0)
+pkg_check_modules(MATE_PANEL_APPLET REQUIRED libmatepanelapplet-4.0)
 
 add_definitions(-DGETTEXT_PACKAGE=${PROJECT_NAME})
 add_definitions(-DPACKAGE_DATA_DIR="${PACKAGE_DATA_DIR}")

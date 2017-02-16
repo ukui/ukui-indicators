@@ -1,5 +1,5 @@
 #include <gtk/gtk.h>
-#include <ukui-panel-applet.h>
+#include <mate-panel-applet.h>
 #include <glib/gi18n.h>
 #include <stdlib.h>
 #include <webkit/webkit.h>
@@ -165,8 +165,8 @@ menu_pos_func(GtkMenu *menu, gint *x, gint *y, gboolean *push_in, IndicatorCalen
         menu_y += alloc.y;
     }
 
-    if (ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_UP ||
-        ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_DOWN) {
+    if (mate_panel_applet_get_orient(d->applet) == MATE_PANEL_APPLET_ORIENT_UP ||
+        mate_panel_applet_get_orient(d->applet) == MATE_PANEL_APPLET_ORIENT_DOWN) {
 //        menu_x += alloc.width - req.width;
 //        if (pointer_x > 0 && pointer_x < alloc.width &&
 //            pointer_x < alloc.width - req.width) {
@@ -446,7 +446,7 @@ update_time(IndicatorCalendar *d)
     int height;
     static const int padding = 2;
     pango_layout_get_pixel_size(layout, NULL, &height);
-    if (ukui_panel_applet_get_size(d->applet) > static_cast<guint>(2 * height + 2 * padding)) {
+    if (mate_panel_applet_get_size(d->applet) > static_cast<guint>(2 * height + 2 * padding)) {
         gtk_label_set_markup(GTK_LABEL(d->applet_label), markup);
         g_free(markup);
     } else {
