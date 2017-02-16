@@ -5,11 +5,11 @@ Location=@INSTALL_LIBEXEC_DIR@/ukui-indicators
 Name=Ukui Indicators Applet Factory
 Description=Ukui Indicators Applet Factory
 
-[UkuiIndicatorsApplet]
+[MateIndicatorsApplet]
 Name=Ukui Indicators Applet
 Description=Ukui Indicators Applet
 Icon=ukui-panel-notification-area
 MateComponentId=OAFIID:MATE_MateIndicatorsApplet
-X-MATE-Bugzilla-Bugzilla=UKUI
-X-MATE-Bugzilla-Product=ukui-indicators
-X-MATE-Bugzilla-Version=@PACKAGE_VERSION@
+X-UKUI-Bugzilla-Bugzilla=UKUI
+X-UKUI-Bugzilla-Product=ukui-indicators
+X-UKUI-Bugzilla-Version=@PACKAGE_VERSION@
