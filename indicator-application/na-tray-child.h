@@ -3,6 +3,7 @@
  * Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
  * Copyright (C) 2003-2006 Vincent Untz
  * Copyright (C) 2008 Red Hat, Inc.
+ * Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

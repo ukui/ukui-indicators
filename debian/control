@@ -22,8 +22,8 @@ Depends: ${shlibs:Depends},
          python3,
          gir1.2-gtk-3.0,
          gnome-system-tools
-Description: notification area use to show time, network, etc. 
- A small applet to display information from various applications 
+Description: notification area use to show time, network, etc.
+ A small applet to display information from various applications
  consistently in the panel.
  .
  The indicator applet exposes Ayatana Indicators in the UKUI Panel.

@@ -2,27 +2,67 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ukui-indicators
 Source: https://github.com/ukui/ukui-indicators
 
-Files: *
-Copyright: 2007-2014, Clement Lefebvre <root@linuxmint.com>
-           2015-2016, Martin Wimpress <code@ubuntu-ukui.org>
-           2016, Sorokin Alexei <sor.alexei@meowr.ru>
-           2016,Tianjin KYLIN Information Technology Co., Ltd.
+Files: CMakeLists.txt
+       README.md
+       applet-data.h
+       config.h.in
+       data/*
+       indicator-application/CMakeLists.txt
+Copyright: *No Copyright*
+License: GPL-2+
+
+Files: debian/*
+       indicator-calendar/*
+       indicator-desktop/*
+       src/*
+Copyright: Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
 Files: indicator-application/fixedtip.h
        indicator-application/fixedtip.c
-       indicator-application/ia-marshal.h
+Copyright: Copyright (C) 2001 Havoc Pennington, 2002 Red Hat Inc.
+           Copyright (C) 2003-2006 Vincent Untz
+           Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/ia-marshal.h
        indicator-application/ia-marshal.c
-       indicator-application/na-tray-child.h
+Copyright: Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/na-marshal.h
+       indicator-application/na-marshal.c
+Copyright: Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/na-tray-child.h
        indicator-application/na-tray-child.c
-       indicator-application/na-tray.h
+Copyright: Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
+           Copyright (C) 2003-2006 Vincent Untz
+           Copyright (C) 2008 Red Hat, Inc.
+           Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/na-tray.h
        indicator-application/na-tray.c
-       indicator-application/na-tray-manager.h
+Copyright: Copyright (C) 2002 Red Hat, Inc.
+           Copyright (C) 2003-2006 Vincent Untz
+           Copyright (C) 2007 Christian Persch
+	   Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/na-tray-manager.h
        indicator-application/na-tray-manager.c
-Copyright: 2007-2014, Clement Lefebvre <root@linuxmint.com>
-           2015-2016, Martin Wimpress <code@ubuntu-ukui.org>
-           2016, Sorokin Alexei <sor.alexei@meowr.ru>
-           2016,Tianjin KYLIN Information Technology Co., Ltd.
+Copyright: Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
+           Copyright (C) 2003-2006 Vincent Untz
+           Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-2+
+
+Files: indicator-application/indicator-application.h
+       indicator-application/indicator-application.cpp
+Copyright: Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
+           Copyright (C) 2003-2006 Vincent Untz
+           Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
 License: GPL-2+
