@@ -331,13 +331,11 @@ update_time(IndicatorCalendar *d)
 	if (ischinese)
 	{
             sprintf(datestr, "%d年%d月%d日星期一", year, month, day);
-            //markup = g_strdup_printf("<span>%s 周一\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
 	    markup = update_label(d, (char *)("周一"), year, month, day, hour);
 	}
 	else
 	{
-	    sprintf(datestr, " ");
-            //markup = g_strdup_printf("<span>%s Mon\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
+	    sprintf(datestr, "%s Mon  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    markup = update_label(d, (char *)"Mon", year, month, day, hour);
 	}
     }
@@ -351,22 +349,20 @@ update_time(IndicatorCalendar *d)
 	else
 	{
 	    markup = update_label(d, (char *)("Tues"), year, month, day, hour);
-            sprintf(datestr, " ");
+	    sprintf(datestr, "%s Tues  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	}
     }
     if (week == 3)
     {
 	if (ischinese)
 	{
-            //markup = g_strdup_printf("<span>%s 周三\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
             sprintf(datestr, "%d年%d月%d日星期三", year, month, day);
 	    markup = update_label(d, (char *)("周三"), year, month, day, hour);
 	}
 	else
 	{
 	    markup = update_label(d, (char *)("Wed"), year, month, day, hour);
-	    //markup = g_strdup_printf("<span>%s Wed\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
-            sprintf(datestr, " ");
+	    sprintf(datestr, "%s Wed  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	}
     }
     if (week == 4)
@@ -374,14 +370,12 @@ update_time(IndicatorCalendar *d)
 	if (ischinese)
 	{
 	    markup = update_label(d, (char *)("周四"), year, month, day, hour);
-            //markup = g_strdup_printf("<span>%s 周四\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
             sprintf(datestr, "%d年%d月%d日星期四", year, month, day);
 	}
 	else
 	{
 	    markup = update_label(d, (char *)("Thur"), year, month, day, hour);
-	    //markup = g_strdup_printf("<span>%s Thur\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
-            sprintf(datestr, " ");
+	    sprintf(datestr, "%s Thur  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	}
     }
     if (week == 5)
@@ -389,14 +383,12 @@ update_time(IndicatorCalendar *d)
 	if (ischinese)
 	{
 	    markup = update_label(d, (char *)("周五"), year, month, day, hour);
-            //markup = g_strdup_printf("<span>%s 周五\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
             sprintf(datestr, "%d年%d月%d日星期五", year, month, day);
 	}
 	else
 	{
 	    markup = update_label(d, (char *)("Fri"), year, month, day, hour);
-	    //markup = g_strdup_printf("<span>%s Fri\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
-            sprintf(datestr, " ");
+	    sprintf(datestr, "%s Fri  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	}
     }
     if (week == 6)
@@ -404,14 +396,12 @@ update_time(IndicatorCalendar *d)
 	if (ischinese)
 	{
 	    markup = update_label(d, (char *)("周六"), year, month, day, hour);
-            //markup = g_strdup_printf("<span>%s 周六\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
             sprintf(datestr, "%d年%d月%d日星期六", year, month, day);
 	}
 	else
 	{
 	    markup = update_label(d, (char *)("Sat"), year, month, day, hour);
-	    //markup = g_strdup_printf("<span>%s Sat\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
-            sprintf(datestr, " ");
+	    sprintf(datestr, "%s Sat  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	}
     }
     if (week == 7)
@@ -419,14 +409,12 @@ update_time(IndicatorCalendar *d)
 	if (ischinese)
 	{
 	    markup = update_label(d, (char *)("周日"), year, month, day, hour);
-            //markup = g_strdup_printf("<span>%s 周日\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
             sprintf(datestr, "%d年%d月%d日星期天", year, month, day);
 	}
 	else
 	{
 	    markup = update_label(d, (char *)("Sun"), year, month, day, hour);
-	    //markup = g_strdup_printf("<span>%s Sun\n %04d/%02d/%02d </span>", d->time.c_str(), year, month, day);
-            sprintf(datestr, " ");
+	    sprintf(datestr, "%s Sun  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	}
     }
 
