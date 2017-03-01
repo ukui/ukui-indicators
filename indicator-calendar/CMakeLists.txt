@@ -3,7 +3,7 @@ set(SRC_LIST
 
 add_library(indicator-calendar STATIC ${SRC_LIST})
 
-pkg_check_modules(WEBKIT REQUIRED webkitgtk-3.0)
+pkg_check_modules(WEBKIT REQUIRED webkit2gtk-4.0)
 
 include_directories(
     ${PROJECT_BINARY_DIR}

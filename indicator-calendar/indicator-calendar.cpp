@@ -2,7 +2,8 @@
 #include <mate-panel-applet.h>
 #include <glib/gi18n.h>
 #include <stdlib.h>
-#include <webkit/webkit.h>
+#include <webkit2/webkit2.h>
+#include <webkitdom/webkitdom.h>
 
 #include "indicator-calendar.h"
 
@@ -207,26 +208,26 @@ on_button_press(GtkWidget *button, GdkEventButton *event, IndicatorCalendar *d)
 static void
 applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
 {
-    WebKitDOMElement *year_div;
-    WebKitDOMElement *month_div;
-    WebKitDOMDocument *doc;
+    //WebKitDOMElement *year_div;
+    //WebKitDOMElement *month_div;
+    //WebKitDOMDocument *doc;
 
-    doc = webkit_web_view_get_dom_document(WEBKIT_WEB_VIEW(d->webview));
-    year_div = webkit_dom_document_get_element_by_id(doc, "year_div");
-    month_div = webkit_dom_document_get_element_by_id(doc, "month_div");
+    //doc = webkit_web_page_get_dom_document(WEBKIT_WEB_VIEW(d->webview));
+    //year_div = webkit_dom_document_get_element_by_id(doc, "year_div");
+    //month_div = webkit_dom_document_get_element_by_id(doc, "month_div");
 
     if (gtk_widget_get_visible(d->main_window) == FALSE) {
         gtk_widget_show_all(d->main_window);
         webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
     } else {
-        webkit_dom_element_set_class_name(year_div, "hidden_div");
-        webkit_dom_element_set_class_name(month_div, "hidden_div");
+        //webkit_dom_element_set_class_name(year_div, "hidden_div");
+        //webkit_dom_element_set_class_name(month_div, "hidden_div");
         gtk_widget_hide(d->main_window);
     }
 
-    g_object_unref(doc);
-    g_object_unref(year_div);
-    g_object_unref(month_div);
+    //g_object_unref(doc);
+    //g_object_unref(year_div);
+    //g_object_unref(month_div);
 }
 
 static void popup_config(GtkAction *action, gpointer user_data)
@@ -457,7 +458,7 @@ update_time(IndicatorCalendar *d)
 static void
 doc_loaded(WebKitWebView *web_view, IndicatorCalendar *d)
 {
-    WebKitDOMDocument *doc;
+/*    WebKitDOMDocument *doc;
     WebKitDOMElement *header, *calendar, *right_pane, *general_datetime_list, *hl_table;
 
     doc = webkit_web_view_get_dom_document(WEBKIT_WEB_VIEW(d->webview));
@@ -478,14 +479,18 @@ doc_loaded(WebKitWebView *web_view, IndicatorCalendar *d)
                     webkit_dom_element_get_offset_height(general_datetime_list) +
                     webkit_dom_element_get_offset_height(hl_table) +
                     12; // FIXMED: 5?
+*/
+    if (ischinese)
+        gtk_widget_set_size_request(d->main_window, 480, 400);
+    else
+        gtk_widget_set_size_request(d->main_window, 500, 280);
 
-    gtk_widget_set_size_request(d->main_window, width, height2);
 
-    g_object_unref(doc);
+/*    g_object_unref(doc);
     g_object_unref(calendar);
     g_object_unref(right_pane);
     g_object_unref(general_datetime_list);
-    g_object_unref(hl_table);
+    g_object_unref(hl_table);*/
 }
 
 static void reposition(GtkWidget *widget, IndicatorCalendar *d)
