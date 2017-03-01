@@ -2,19 +2,24 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ukui-indicators
 Source: https://github.com/ukui/ukui-indicators
 
-Files: CMakeLists.txt
+Files: AUTHORS
+       CMakeLists.txt
+       COPYING
        README.md
        applet-data.h
        config.h.in
        data/*
        indicator-application/CMakeLists.txt
+       src/CMakeLists.txt
+       indicator-calendar/CMakeLists.txt
+       indicator-desktop/CMakeLists.txt
 Copyright: *No Copyright*
 License: GPL-2+
 
 Files: debian/*
        indicator-calendar/*
        indicator-desktop/*
-       src/*
+       src/main.cpp
 Copyright: Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
@@ -27,10 +32,7 @@ License: GPL-2+
 
 Files: indicator-application/ia-marshal.h
        indicator-application/ia-marshal.c
-Copyright: Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
-License: GPL-2+
-
-Files: indicator-application/na-marshal.h
+       indicator-application/na-marshal.h
        indicator-application/na-marshal.c
 Copyright: Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
@@ -48,17 +50,12 @@ Files: indicator-application/na-tray.h
 Copyright: Copyright (C) 2002 Red Hat, Inc.
            Copyright (C) 2003-2006 Vincent Untz
            Copyright (C) 2007 Christian Persch
-	   Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
+           Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
 Files: indicator-application/na-tray-manager.h
        indicator-application/na-tray-manager.c
-Copyright: Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
-           Copyright (C) 2003-2006 Vincent Untz
-           Copyright (C) 2016, Tianjin KYLIN Information Technology Co., Ltd.
-License: GPL-2+
-
-Files: indicator-application/indicator-application.h
+       indicator-application/indicator-application.h
        indicator-application/indicator-application.cpp
 Copyright: Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
            Copyright (C) 2003-2006 Vincent Untz

@@ -1,6 +1,8 @@
 ukui-indicators (1.0.0) zesty; urgency=medium
 
-  * New release.
+  * Replace ukui-panel with mate-panel.
+  * Replace webkitgtk-3.0 with webkit2gtk-4.0.
+  * Fix the error of empty page.
 
  -- handsome_feng <jianfengli@ubuntukylin.com>  Sun, 12 Feb 2017 14:28:23 +0800
 
