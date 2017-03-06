@@ -1,7 +1,7 @@
 Source: ukui-indicators
 Section: x11
 Priority: optional
-Maintainer: Kylin Team <ukui@kylinos.cn>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Build-Depends: debhelper (>= 9),
                cmake,
                libwebkit2gtk-4.0-dev,
