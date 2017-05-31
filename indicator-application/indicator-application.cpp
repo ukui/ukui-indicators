@@ -95,17 +95,18 @@ static void force_no_focus_padding(GtkWidget* widget)
 {
     static gboolean first_time = TRUE;
 
+    GtkCssProvider *provider;
+
     if (first_time)
     {
-        gtk_rc_parse_string ("\n"
-                             "style \"na-tray-style\"\n"
-                             "{\n"
-                             "    GtkWidget::focus-line-width=0\n"
-                             "    GtkWidget::focus-padding=0\n"
-                             "}\n"
-                             "\n"
-                             "    widget \"*.PanelAppletNaTray\" style \"na-tray-style\"\n"
-                             "\n");
+        provider = gtk_css_provider_new();
+
+        gtk_css_provider_load_from_data(provider,
+                                        "#PanelAppletNaTray {"
+                                        "    outline-width : 0px;\n"
+                                        "    outline-offset: 0px;\n"
+                                        "}", -1, NULL);
+        g_object_unref(provider);
 
         first_time = FALSE;
     }
