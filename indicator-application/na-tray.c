@@ -548,8 +548,8 @@ na_tray_expose_icon (GtkWidget *widget,
       gdk_cairo_set_source_window (cr,
                                    gtk_widget_get_window (widget),
                                    allocation.x,
-                                   allocation.y);
-      cairo_rectangle (cr, allocation.x, allocation.y, allocation.width, allocation.height);
+                                   0);
+      cairo_rectangle (cr, allocation.x, 0, allocation.width, allocation.height);
       cairo_clip (cr);
 #else
       gdk_cairo_set_source_pixmap (cr,

@@ -71,7 +71,7 @@ static void applet_size_changed(MatePanelApplet* applet, int size, IndicatorAppl
         int padding1 = (size - d->icon_size) / 2;
         int padding2 = size - d->icon_size - padding1;
         if (d->orientation == GTK_ORIENTATION_HORIZONTAL)
-            gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), 0, 0, 0, 0);
+            gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), padding1, padding2, 0, 0);
         else
             gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), 0, 0, padding1, padding2);
     }
