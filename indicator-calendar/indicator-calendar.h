@@ -30,7 +30,7 @@ public:
     IndicatorCalendar(AppletData *ad);
     ~IndicatorCalendar();
 
-    MatePanelApplet *applet;
+    UkuiPanelApplet *applet;
 
     GSettings *settings;
     GSettings *panel_settings;

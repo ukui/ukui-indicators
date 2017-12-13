@@ -1,15 +1,15 @@
 [Applet Factory]
-Id=MateIndicatorsAppletFactory
+Id=UkuiIndicatorsAppletFactory
 InProcess=false
 Location=@INSTALL_LIBEXEC_DIR@/ukui-indicators
 Name=Ukui Indicators Applet Factory
 Description=Ukui Indicators Applet Factory
 
-[MateIndicatorsApplet]
+[UkuiIndicatorsApplet]
 Name=Ukui Indicators Applet
 Description=Ukui Indicators Applet
 Icon=ukui-panel-notification-area
-MateComponentId=OAFIID:MATE_MateIndicatorsApplet
+UkuiComponentId=OAFIID:UKUI_UkuiIndicatorsApplet
 X-UKUI-Bugzilla-Bugzilla=UKUI
 X-UKUI-Bugzilla-Product=ukui-indicators
 X-UKUI-Bugzilla-Version=@PACKAGE_VERSION@

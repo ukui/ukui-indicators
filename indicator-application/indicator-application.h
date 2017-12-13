@@ -30,7 +30,7 @@ public:
     IndicatorApplication(AppletData *ad);
     ~IndicatorApplication();
 
-    MatePanelApplet *applet;
+    UkuiPanelApplet *applet;
     GtkWidget *event_box;
     GtkWidget *alignment;
     GtkOrientation orientation;

@@ -18,7 +18,7 @@
  */
 
 #include <gtk/gtk.h>
-#include <mate-panel-applet.h>
+#include <ukui-panel-applet.h>
 #include <glib/gi18n.h>
 #include <stdlib.h>
 #include <webkit2/webkit2.h>
@@ -51,8 +51,8 @@ IndicatorCalendar::IndicatorCalendar(AppletData *ad) :
     has_cursor(FALSE),
     button_pressed(FALSE)
 {
-    settings = g_settings_new("org.mate.panel.indicator.calendar");
-    panel_settings = g_settings_new_with_path("org.mate.panel.toplevel", "/org/mate/panel/toplevels/bottom/");
+    settings = g_settings_new("org.ukui.panel.indicator.calendar");
+    panel_settings = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
     use_24h_format = g_settings_get_boolean(settings, "use-24h-format");
     show_second = g_settings_get_boolean(settings, "show-second");
     gchar *text = g_settings_get_string(settings, "theme");
@@ -185,8 +185,8 @@ menu_pos_func(GtkMenu *menu, gint *x, gint *y, gboolean *push_in, IndicatorCalen
         menu_y += alloc.y;
     }
 
-    if (mate_panel_applet_get_orient(d->applet) == MATE_PANEL_APPLET_ORIENT_UP ||
-        mate_panel_applet_get_orient(d->applet) == MATE_PANEL_APPLET_ORIENT_DOWN) {
+    if (ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_UP ||
+        ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_DOWN) {
 //        menu_x += alloc.width - req.width;
 //        if (pointer_x > 0 && pointer_x < alloc.width &&
 //            pointer_x < alloc.width - req.width) {
@@ -454,7 +454,7 @@ update_time(IndicatorCalendar *d)
     int height;
     static const int padding = 2;
     pango_layout_get_pixel_size(layout, NULL, &height);
-    if (mate_panel_applet_get_size(d->applet) > static_cast<guint>(2 * height + 2 * padding)) {
+    if (ukui_panel_applet_get_size(d->applet) > static_cast<guint>(2 * height + 2 * padding)) {
         gtk_label_set_markup(GTK_LABEL(d->applet_label), markup);
         g_free(markup);
     } else {

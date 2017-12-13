@@ -7,13 +7,13 @@ pkg_check_modules(WEBKIT REQUIRED webkit2gtk-4.0)
 
 include_directories(
     ${PROJECT_BINARY_DIR}
-    ${MATE_PANEL_APPLET_INCLUDE_DIRS}
+    ${UKUI_PANEL_APPLET_INCLUDE_DIRS}
     ${GTK_INCLUDE_DIRS}
     ${WEBKIT_INCLUDE_DIRS})
 
 target_link_libraries(
     indicator-calendar
-    ${MATE_PANEL_APPLET_LIBRARIES}
+    ${UKUI_PANEL_APPLET_LIBRARIES}
     ${GTK_LIBRARIES}
     ${WEBKIT_LIBRARIES})
 

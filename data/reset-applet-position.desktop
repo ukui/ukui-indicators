@@ -8,5 +8,5 @@ Type=Application
 Categories=Settings;
 Keywords=settings;
 NoDisplay=trues
-X-MATE-Bugzilla-Bugzilla=MATE
-X-MATE-Autostart-Notify=false
+X-UKUI-Bugzilla-Bugzilla=UKUI
+X-UKUI-Autostart-Notify=false

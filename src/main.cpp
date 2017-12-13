@@ -48,16 +48,16 @@ load_content(AppletData *ad)
 }
 
 static void
-orientation_changed(MatePanelApplet* applet, MatePanelAppletOrient orientation, AppletData *ad)
+orientation_changed(UkuiPanelApplet* applet, UkuiPanelAppletOrient orientation, AppletData *ad)
 {
     switch (orientation) {
-    case MATE_PANEL_APPLET_ORIENT_UP:
-    case MATE_PANEL_APPLET_ORIENT_DOWN:
+    case UKUI_PANEL_APPLET_ORIENT_UP:
+    case UKUI_PANEL_APPLET_ORIENT_DOWN:
         ad->orientation = GTK_ORIENTATION_HORIZONTAL;
         break;
 
-    case MATE_PANEL_APPLET_ORIENT_LEFT:
-    case MATE_PANEL_APPLET_ORIENT_RIGHT:
+    case UKUI_PANEL_APPLET_ORIENT_LEFT:
+    case UKUI_PANEL_APPLET_ORIENT_RIGHT:
     default:
         ad->orientation = GTK_ORIENTATION_VERTICAL;
         break;
@@ -89,12 +89,12 @@ applet_realized(GtkWidget *applet, gpointer user_data)
     AppletData *ad;
 
     ad = static_cast<AppletData*>(g_malloc0(sizeof(AppletData)));
-    ad->applet = MATE_PANEL_APPLET(applet);
+    ad->applet = UKUI_PANEL_APPLET(applet);
 
     g_signal_connect(ad->applet, "change-orient", G_CALLBACK(orientation_changed), ad);
     g_signal_connect(ad->applet, "destroy", G_CALLBACK(on_applet_destroy), ad);
 
-    orientation_changed(ad->applet, mate_panel_applet_get_orient(ad->applet), ad);
+    orientation_changed(ad->applet, ukui_panel_applet_get_orient(ad->applet), ad);
 }
 
 static
@@ -132,9 +132,9 @@ void log_handler(const gchar *log_domain, GLogLevelFlags log_level, const gchar 
 }
 
 static gboolean
-applet_factory(MatePanelApplet *applet, const gchar *iid, gpointer user_data)
+applet_factory(UkuiPanelApplet *applet, const gchar *iid, gpointer user_data)
 {
-    if (std::string(iid) != "MateIndicatorsApplet")
+    if (std::string(iid) != "UkuiIndicatorsApplet")
         return FALSE;
 
 #ifndef NDEBUG
@@ -144,17 +144,17 @@ applet_factory(MatePanelApplet *applet, const gchar *iid, gpointer user_data)
 #endif
 
     g_signal_connect(GTK_WIDGET(applet), "realize", G_CALLBACK(applet_realized), NULL);
-    mate_panel_applet_set_flags(applet,
-                                static_cast<MatePanelAppletFlags>(MATE_PANEL_APPLET_EXPAND_MINOR | MATE_PANEL_APPLET_HAS_HANDLE));
-    mate_panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
+    ukui_panel_applet_set_flags(applet,
+                                static_cast<UkuiPanelAppletFlags>(UKUI_PANEL_APPLET_EXPAND_MINOR | UKUI_PANEL_APPLET_HAS_HANDLE));
+    ukui_panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
 
     gtk_widget_show_all(GTK_WIDGET(applet));
 
     return TRUE;
 }
 
-MATE_PANEL_APPLET_OUT_PROCESS_FACTORY("MateIndicatorsAppletFactory",
+UKUI_PANEL_APPLET_OUT_PROCESS_FACTORY("UkuiIndicatorsAppletFactory",
                                       PANEL_TYPE_APPLET,
-                                      "MateIndicatorsApplet",
+                                      "UkuiIndicatorsApplet",
                                       applet_factory,
                                       NULL)

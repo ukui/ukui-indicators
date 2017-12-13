@@ -23,7 +23,7 @@
 #include <config.h>
 #include <string.h>
 
-#include <mate-panel-applet.h>
+#include <ukui-panel-applet.h>
 
 #include <gtk/gtk.h>
 
@@ -128,9 +128,9 @@ const char *ordered_roles[] = {
 
 const char *wmclass_roles[] = {
   "Bluetooth-applet", "bluetooth",
-  "mate-volume-control-applet", "volume",
+  "ukui-volume-control-applet", "volume",
   "Nm-applet", "network",
-  "mate-power-manager", "battery",
+  "ukui-power-manager", "battery",
   "keyboard", "keyboard",
   NULL,
 };
