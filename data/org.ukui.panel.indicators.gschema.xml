@@ -33,4 +33,26 @@
         <description>let user drag icons or not</description>
     </key>
   </schema>
+  <schema id="org.ukui.panel.indicator.tray">
+    <key name="show" type="b">
+      <default>true</default>
+      <summary>whether to show applet in tray</summary>
+      <description>whether to show applet in tray</description>
+    </key>
+    <key name="number" type="i">
+      <default>0</default>
+      <summary>store applet number</summary>
+      <description>store applet number</description>
+    </key>
+    <key name="applet-name" type="s">
+      <default>'ukui'</default>
+      <summary>store applet name in tray</summary>
+      <description>store applet name in tray</description>
+    </key>
+    <key name="applet-icon" type="s">
+      <default>'icon'</default>
+      <summary>store applet icon in tray</summary>
+      <description>store applet icon in tray</description>
+    </key>
+  </schema>
 </schemalist>

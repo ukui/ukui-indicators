@@ -368,6 +368,60 @@ na_tray_child_new (GdkScreen *screen,
 
   return GTK_WIDGET (child);
 }
+char *
+na_tray_child_get_icon_name (NaTrayChild *child)
+{
+  char *retval = NULL;
+  GdkDisplay *display;
+  Atom utf8_string, atom, type,*atom1;
+  int result;
+  int format;
+  gulong nitems;
+  gulong bytes_after;
+  gchar *val;
+
+  g_return_val_if_fail (NA_IS_TRAY_CHILD (child), NULL);
+
+  display = gtk_widget_get_display (GTK_WIDGET (child));
+
+  utf8_string = gdk_x11_get_xatom_by_name_for_display (display, "UTF8_STRING");
+  atom = gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_ICON_NAME");
+
+  gdk_error_trap_push ();
+
+  result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display),
+                               child->icon_window,
+                               atom,
+                               0, G_MAXLONG,
+                               False, utf8_string,
+                               &type, &format, &nitems,
+                               &bytes_after, (guchar **)&val);
+
+  if (gdk_error_trap_pop () || result != Success)
+    return NULL;
+
+  if (type != utf8_string ||
+      format != 8 ||
+      nitems == 0)
+    {
+      if (val)
+        XFree (val);
+      return NULL;
+    }
+
+  if (!g_utf8_validate (val, nitems, NULL))
+    {
+      XFree (val);
+      return NULL;
+    }
+
+  retval = g_strndup (val, nitems);
+
+  XFree (val);
+
+  return retval;
+}
+
 
 char *
 na_tray_child_get_title (NaTrayChild *child)

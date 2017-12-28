@@ -43,6 +43,7 @@
 
 #include "na-marshal.h"
 
+int num=0;
 /* Signals */
 enum
 {
@@ -268,6 +269,19 @@ na_tray_manager_plug_removed (GtkSocket       *socket,
 }
 
 static void
+tray_widget_show_notify (GSettings             *settings,
+					gchar                 *key,
+					GtkWidget             *child)
+{
+  gboolean show = g_settings_get_boolean(settings, "show");
+  if(show){
+  	  gtk_widget_show (child);
+  }else{
+  	  gtk_widget_hide (child);
+  }
+}
+
+static void
 na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 				     XClientMessageEvent *xevent)
 {
@@ -285,6 +299,7 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
   if (child == NULL) /* already gone or other error */
     return;
 
+  //child添加icon,实现在na-tray.c 文件的tray_added函数中
   g_signal_emit (manager, manager_signals[TRAY_ICON_ADDED], 0,
 		 child);
 
@@ -310,8 +325,92 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
     }
 
   g_hash_table_insert (manager->socket_table,
-                       GINT_TO_POINTER (icon_window), child);
-  gtk_widget_show (child);
+  
+		  GINT_TO_POINTER (icon_window), child);
+//添加代码
+  char        	*res_name;
+  char        	*res_class;
+  char          *path;
+  GSettings 	*settings;
+  na_tray_child_get_wm_class (NA_TRAY_CHILD(child), &res_name, &res_class);
+  num = num+1;
+  path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num);
+  settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
+  g_signal_connect (settings,
+		  "changed",
+		  G_CALLBACK (tray_widget_show_notify),
+		  child);
+
+  GdkDisplay *display;
+  display = gdk_screen_get_display (manager->screen);
+
+  XWindowAttributes window_attributes;
+  Display *xdisplay;
+  xdisplay = GDK_SCREEN_XDISPLAY (manager->screen);
+  XGetWindowAttributes (xdisplay, icon_window,&window_attributes);
+  XClassHint ch;
+  ch.res_class = NULL;
+  XGetClassHint (xdisplay, icon_window, &ch);
+
+  char 		**IconName;
+  GKeyFile 	*keyfile;
+  char 		*Language;
+  keyfile 	= g_key_file_new ();
+  Language 	= getenv ("GDM_LANG");
+  GError 	*error = NULL;
+  GKeyFileFlags flags;
+  char 		*filename,
+		*Name=NULL,
+		*Icon=NULL,
+		*desktopFile,
+		autostart_desktop_filename[100],
+		applications_desktop_filename[100];
+
+  if (Language == NULL) {
+	Language = "";
+  }
+  sprintf (autostart_desktop_filename, "/etc/xdg/autostart/%s.desktop",ch.res_name);
+  sprintf (applications_desktop_filename, "/usr/share/applications/%s.desktop", ch.res_name);
+
+  if (!access (applications_desktop_filename, 0)) {
+	  desktopFile = applications_desktop_filename;
+  }else if (!access (autostart_desktop_filename, 0)) {
+	  desktopFile = autostart_desktop_filename;
+  }
+  else{
+	desktopFile=NULL;	
+  }
+
+  if (desktopFile != NULL && !g_key_file_load_from_file (keyfile, desktopFile, flags, &error)) {
+	  printf("g_key_file_load_from_file error!\n");
+  }
+  else{
+	  Name = g_key_file_get_locale_string (keyfile, "Desktop Entry","Name", NULL, NULL);
+	  Icon = g_key_file_get_locale_string (keyfile, "Desktop Entry","Icon", NULL, NULL);
+  }
+
+  gboolean show = g_settings_get_boolean(settings, "show");
+
+  printf("Name=%s\n",Name);
+  printf("ch.res_name=%s\n",ch.res_name);
+  if (Name == NULL){
+  	printf("ch.res_name=%s\n",ch.res_name);
+	g_settings_set_string (settings,"applet-name",ch.res_name);
+  } else{
+  	printf("Name=%s\n",Name);
+	g_settings_set_string (settings,"applet-name", Name);
+	g_settings_set_string (settings,"applet-icon", Icon);
+  }
+  g_settings_set_int (settings,"number",num);
+  XFree (ch.res_name);
+
+  if(show){
+  	  gtk_widget_show (child);
+  }else{
+  	  gtk_widget_hide (child);
+  }
+
+//  gtk_widget_show (child);
 }
 
 static void
