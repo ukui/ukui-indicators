@@ -378,7 +378,14 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 	  desktopFile = autostart_desktop_filename;
   }
   else{
-	desktopFile=NULL;	
+	FILE 	*p;
+	char 	word[100];
+	system ("dpkg -S `which sogou-qimpanel`| awk -F ':' '{print $1}' | xargs dpkg -L |grep desktop |sed -n '1p;1q' > /tmp/txt");
+	p = fopen ("/tmp/txt","r");
+	fscanf (p, "%s", &word);
+	fclose (p);
+	desktopFile = word;
+	system ("rm /tmp/txt");
   }
 
   if (desktopFile != NULL && !g_key_file_load_from_file (keyfile, desktopFile, flags, &error)) {
