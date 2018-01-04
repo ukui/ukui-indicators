@@ -21,6 +21,7 @@
 
 #include <string.h>
 #include <cairo.h>
+#include <stdlib.h>
 
 
 static void applet_change_background(UkuiPanelApplet* applet, UkuiPanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, IndicatorApplication *d);
@@ -33,6 +34,7 @@ IndicatorApplication::IndicatorApplication(AppletData *ad) :
     orientation(ad->orientation),
     icon_size(16)
 {
+    system ("dconf reset -f /org/ukui/panel/indicator/");
     tray = na_tray_new_for_screen(gtk_widget_get_screen(GTK_WIDGET(applet)), orientation);
     force_no_focus_padding(GTK_WIDGET(tray));
 
