@@ -380,7 +380,9 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
   else{
 	FILE 	*p;
 	char 	word[100];
-	system ("dpkg -S `which sogou-qimpanel`| awk -F ':' '{print $1}' | xargs dpkg -L |grep desktop |sed -n '1p;1q' > /tmp/txt");
+	char 	desktop_path[1000];
+	sprintf(desktop_path,"dpkg -S `which %s`| awk -F ':' '{print $1}' | xargs dpkg -L |grep desktop |sed -n '1p;1q' > /tmp/txt",ch.res_name);
+	system(desktop_path);
 	p = fopen ("/tmp/txt","r");
 	fscanf (p, "%s", &word);
 	fclose (p);
