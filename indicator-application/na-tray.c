@@ -543,6 +543,11 @@ na_tray_expose_icon (GtkWidget *widget,
 
       gtk_widget_get_allocation (widget, &allocation);
 
+      gboolean widget_show=gtk_widget_get_visible (widget);
+      if (!widget_show){
+      		return;
+      }
+
 #if GTK_CHECK_VERSION (3, 0, 0)
       cairo_save (cr);
       gdk_cairo_set_source_window (cr,
