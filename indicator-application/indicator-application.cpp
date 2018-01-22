@@ -33,6 +33,9 @@ IndicatorApplication::IndicatorApplication(AppletData *ad) :
     orientation(ad->orientation),
     icon_size(16)
 {
+    char 	*path;
+    GSettings 	*settings;
+
     tray = na_tray_new_for_screen(gtk_widget_get_screen(GTK_WIDGET(applet)), orientation);
     force_no_focus_padding(GTK_WIDGET(tray));
 
@@ -50,6 +53,13 @@ IndicatorApplication::IndicatorApplication(AppletData *ad) :
                                               G_CALLBACK(applet_size_changed), this);
 
     applet_size_changed(applet, ukui_panel_applet_get_size(applet), this);
+
+    for(int i = 1; i < 20; i ++){
+		path = 			g_strdup_printf ("%s%d/", "/org/ukui/panel/indicator/tray", i);
+		settings =              g_settings_new_with_path ("org.ukui.panel.indicator.tray", path);
+
+		g_settings_set_int (settings, "number",0);
+    }
 }
 
 IndicatorApplication::~IndicatorApplication()

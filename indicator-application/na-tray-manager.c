@@ -269,6 +269,12 @@ na_tray_manager_plug_removed (GtkSocket       *socket,
 }
 
 static void
+tray_widget_destroy (GtkWidget             *child,
+			  GSettings             *settings)
+{
+	g_settings_set_int (settings,"number",-1);
+}
+static void
 tray_widget_show_notify (GSettings             *settings,
 					gchar                 *key,
 					GtkWidget             *child)
@@ -340,6 +346,11 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 		  "changed",
 		  G_CALLBACK (tray_widget_show_notify),
 		  child);
+
+  g_signal_connect (child,
+		  "destroy",
+		  G_CALLBACK (tray_widget_destroy),
+		  settings);
 
   GdkDisplay *display;
   display = gdk_screen_get_display (manager->screen);
