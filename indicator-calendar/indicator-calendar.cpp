@@ -128,19 +128,21 @@ void IndicatorCalendar::_setup_main_window()
 
     std::string html_file_path(PACKAGE_DATA_DIR "/indicator-calendar/html/");
     GdkColor color = get_border_color("ukuimenu_color");
-    char color_str[20] = { 0 };
-    sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
+//    char color_str[20] = { 0 };
+//    sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
     if (ischinese)
     {
-        char file[30] = {0};
-        sprintf(file, "ukui.html.%s", color_str);
-        html_file_path += file;
+//        char file[30] = {0};
+//        sprintf(file, "ukui.html.%s", color_str);
+//        html_file_path += file;
+	html_file_path += "ukui.html";        
     }
     else
     {
-	char file[30] = {0};
-        sprintf(file, "ukui-en.html.%s", color_str);
-        html_file_path += file;
+//	char file[30] = {0};
+//        sprintf(file, "ukui-en.html.%s", color_str);
+//        html_file_path += file;
+	html_file_path += "ukui-en.html";
     }
 
     std::string html_file_uri("file://");
@@ -278,19 +280,21 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
         std::string html_file_path(PACKAGE_DATA_DIR "/indicator-calendar/html/");
 
 	GdkColor color = get_border_color("ukuimenu_color");
-	char color_str[20] = { 0 };
-	sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
+//	char color_str[20] = { 0 };
+//	sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
 	if (ischinese)
 	{
-		char file[30] = {0};
-		sprintf(file, "ukui.html.%s", color_str);
-		html_file_path += file;
+//		char file[30] = {0};
+//		sprintf(file, "ukui.html.%s", color_str);
+//		html_file_path += file;
+		html_file_path += "ukui.html";		
 	}
 	else
 	{
-		char file[30] = {0};
-		sprintf(file, "ukui-en.html.%s", color_str);
-		html_file_path += file;
+//		char file[30] = {0};
+//		sprintf(file, "ukui-en.html.%s", color_str);
+//		html_file_path += file;
+		html_file_path += "ukui-en.html";
 	}
 
 	std::string html_file_uri("file:://");

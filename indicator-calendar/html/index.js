@@ -165,6 +165,12 @@ window.onload = function () {
                 holiday_div.className = 'hidden_div';
             }
         }
+	var header_id=document.getElementById("header");
+	var header_color=header_id.style.background;
+	var x=document.getElementsByClassName("day_highlight");
+	for (i = 0; i < x.length; i++) {
+		x[i].style.backgroundColor = header_color;
+	}
     });
 
     for (var index = year_range['low']; index <= year_range['high']; index++) {
@@ -235,6 +241,13 @@ window.onload = function () {
         month_selector.value = today.getMonth() + 1 + '月';
         highlight_day = today.getDate();
         create_page(today.getFullYear(), today.getMonth() + 1);
+	var header_id=document.getElementById("header");
+	var header_color=header_id.style.background;
+	var x=document.getElementsByClassName("day_today");
+	var i;
+	for (i = 0; i < x.length; i++) {
+		x[i].style.backgroundColor = header_color;
+	}
     });
 
     calendar = document.getElementById('calendar_table');
@@ -273,7 +286,16 @@ function create_page(year, month) {
             } else {
                 current_cell = current_row.cells[column];
             }
-
+	    var header_id=document.getElementById("header");
+	    var header_color=header_id.style.background;
+	    var x=document.getElementsByClassName("day_highlight");
+	    for (i = 0; i < x.length; i++) {
+		x[i].style.backgroundColor = "#ffffff";
+	    }
+	    x=document.getElementsByClassName("day_today");
+	    for (i = 0; i < x.length; i++) {
+	    	x[i].style.backgroundColor = "#ffffff";
+	    }
             var index = (row - 1) * 7 + column; // [0, 7 * 6 - 1]
             /*
              * 注意判断顺序
