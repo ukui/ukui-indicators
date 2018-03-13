@@ -135,6 +135,16 @@ const char *wmclass_roles[] = {
   NULL,
 };
 
+const char *applet[]={
+	"nm-applet",
+	"Mate-volume-control-applet",
+	"Mate-power-manager",
+	"Sogou-qimpanel",
+	"indicator-china-weather",
+	"blueman",
+	"NULL",
+};
+
 static const char *
 find_role (const char *wmclass)
 {
@@ -162,6 +172,17 @@ find_role_position (const char *role)
 
   return i + 1;
 }
+static int
+get_applet_position (char *class_a){
+    int i = 0;
+    while (strcmp(applet[i],"NULL")){
+	if (!strcmp (applet[i],class_a)){
+		break;
+	}
+	i=i+1;
+    }
+    return i;
+}
 
 static int
 find_icon_position (NaTray    *tray,
@@ -183,13 +204,58 @@ find_icon_position (NaTray    *tray,
 
   class_a = NULL;
   na_tray_child_get_wm_class (NA_TRAY_CHILD (icon), NULL, &class_a);
-  if (!class_a)
+  if (!class_a){
+    g_free (class_a);
     return position;
+  }
 
+
+  int 		 len=0;
+  char          *res_name;
+  char          *res_class;  
+  int 		 applet_pos = get_applet_position(class_a);
+  int 		 k=0;
+  int 		 num=0;
+
+  children = gtk_container_get_children (GTK_CONTAINER (priv->box));
+  while (k < applet_pos){
+  	for (l = g_list_last (children); l; l = l->prev)
+    	{
+		na_tray_child_get_wm_class (NA_TRAY_CHILD(l->data), &res_name, &res_class);
+		if (!strcmp(res_name,"sogou-qimpanel")){
+			if (!strcmp(applet[k],"Sogou-qimpanel")){
+				num=num+1;
+			}
+		}
+		if (!strcmp(res_name,applet[k])){
+			num=num+1;
+		}
+		if (!strcmp(res_name,"mate-power-manager")){
+			if (!strcmp(applet[k],"Mate-power-manager")){
+				num=num+1;
+			}
+		}
+		if (!strcmp(res_name,"mate-volume-control-applet")){
+			if (!strcmp(applet[k],"Mate-volume-control-applet")){
+				num=num+1;
+			}
+		}
+	}
+	k++;	
+    }
+
+
+  children = gtk_container_get_children (GTK_CONTAINER (priv->box));
+  for (l = g_list_last (children); l; l = l->prev)
+    {
+	len = len + 1;
+    }
+  position = len-num;
   role = find_role (class_a);
-  g_free (class_a);
-  if (!role)
+  if (!role) {
+    g_free (class_a);
     return position;
+  }
 
   role_position = find_role_position (role);
   g_object_set_data (G_OBJECT (icon), "role-position", GINT_TO_POINTER (role_position));
