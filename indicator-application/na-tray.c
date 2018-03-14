@@ -222,23 +222,25 @@ find_icon_position (NaTray    *tray,
   	for (l = g_list_last (children); l; l = l->prev)
     	{
 		na_tray_child_get_wm_class (NA_TRAY_CHILD(l->data), &res_name, &res_class);
-		if (!strcmp(res_name,"sogou-qimpanel")){
+		if (res_name != NULL){
+		    if (!strcmp(res_name,"sogou-qimpanel")){
 			if (!strcmp(applet[k],"Sogou-qimpanel")){
 				num=num+1;
 			}
-		}
-		if (!strcmp(res_name,applet[k])){
+		    }
+		    if (!strcmp(res_name,applet[k])){
 			num=num+1;
-		}
-		if (!strcmp(res_name,"mate-power-manager")){
+		    }
+		    if (!strcmp(res_name,"mate-power-manager")){
 			if (!strcmp(applet[k],"Mate-power-manager")){
 				num=num+1;
 			}
-		}
-		if (!strcmp(res_name,"mate-volume-control-applet")){
+		    }
+		    if (!strcmp(res_name,"mate-volume-control-applet")){
 			if (!strcmp(applet[k],"Mate-volume-control-applet")){
 				num=num+1;
 			}
+		    }
 		}
 	}
 	k++;	
