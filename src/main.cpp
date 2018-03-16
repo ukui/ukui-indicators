@@ -42,8 +42,13 @@ load_content(AppletData *ad)
         delete desktop;
     desktop = new IndicatorDesktop(ad);
 
-    gtk_box_pack_start(GTK_BOX(ad->box), apps->event_box, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(ad->box), calendar->event_box, FALSE, FALSE, 0);
+    GtkWidget *hbox=gtk_hbox_new(FALSE, 20);
+
+    gtk_box_pack_start(GTK_BOX(hbox), apps->event_box, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), calendar->event_box, FALSE, FALSE, 0);
+
+
+    gtk_box_pack_start(GTK_BOX(ad->box), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(ad->box), desktop->event_box, FALSE, FALSE, 0);
 }
 
@@ -67,7 +72,7 @@ orientation_changed(UkuiPanelApplet* applet, UkuiPanelAppletOrient orientation, 
         gtk_widget_destroy(ad->box);
 
     if (ad->orientation == GTK_ORIENTATION_HORIZONTAL)
-        ad->box = gtk_hbox_new(FALSE, 0);
+        ad->box = gtk_hbox_new(FALSE, 5);
     else
         ad->box = gtk_vbox_new(FALSE, 0);
 
