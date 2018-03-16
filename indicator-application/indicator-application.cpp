@@ -70,6 +70,20 @@ IndicatorApplication::~IndicatorApplication()
 
 static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorApplication *d)
 {
+    switch (size){
+	case 40:
+		d->icon_size = 16;
+		break;
+	case 60:
+		d->icon_size = 22;
+		break;
+	case 80:
+		d->icon_size = 32;
+		break;
+	default:
+		d->icon_size = 16;
+    }
+
     if (d->orientation == GTK_ORIENTATION_HORIZONTAL)
         gtk_widget_set_size_request(d->event_box, -1, size);
     else

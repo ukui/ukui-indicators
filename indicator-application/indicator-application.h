@@ -35,7 +35,7 @@ public:
     GtkWidget *alignment;
     GtkOrientation orientation;
     NaTray *tray;
-    const int icon_size;
+    int icon_size;
 
     gulong change_size_handler_id;
     gulong change_background_handler_id;
