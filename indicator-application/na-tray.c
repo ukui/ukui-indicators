@@ -27,34 +27,12 @@
 
 #include <gtk/gtk.h>
 
-#include "na-tray-manager.h"
 #include "fixedtip.h"
 
 #include "na-tray.h"
 
 #define ICON_SPACING 10
 #define MIN_BOX_SIZE 3
-
-typedef struct
-{
-  NaTrayManager *tray_manager;
-  GSList        *all_trays;
-  GHashTable    *icon_table;
-  GHashTable    *tip_table;
-} TraysScreen;
-
-struct _NaTrayPrivate
-{
-  GdkScreen   *screen;
-  TraysScreen *trays_screen;
-
-  GtkWidget *box;
-  GtkWidget *frame;
-
-  guint idle_redraw_id;
-
-  GtkOrientation orientation;
-};
 
 typedef struct
 {

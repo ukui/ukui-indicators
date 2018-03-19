@@ -23,6 +23,7 @@
  * Used to be: eggtraytray.h
  */
 
+#include "na-tray-manager.h"
 #ifndef __NA_TRAY_H__
 #define __NA_TRAY_H__
 
@@ -58,6 +59,27 @@ struct _NaTrayClass
   GtkBinClass parent_class;
 };
 
+typedef struct
+{
+  NaTrayManager *tray_manager;
+  GSList        *all_trays;
+  GHashTable    *icon_table;
+  GHashTable    *tip_table;
+} TraysScreen;
+
+struct _NaTrayPrivate
+{
+  GdkScreen   *screen;
+  TraysScreen *trays_screen;
+
+  GtkWidget *box;
+  GtkWidget *frame;
+
+  guint idle_redraw_id;
+
+  GtkOrientation orientation;
+};
+
 GType           na_tray_get_type        (void);
 NaTray         *na_tray_new_for_screen  (GdkScreen     *screen,
 					 GtkOrientation orientation);
@@ -71,3 +93,4 @@ void		na_tray_force_redraw	(NaTray        *tray);
 #endif
 
 #endif /* __NA_TRAY_H__ */
+
