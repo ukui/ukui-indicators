@@ -297,7 +297,7 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
 		html_file_path += "ukui-en.html";
 	}
 
-	std::string html_file_uri("file:://");
+	std::string html_file_uri("file://");
         html_file_uri += html_file_path;
 
         gtk_widget_modify_bg(d->main_window, GTK_STATE_NORMAL, &color);
