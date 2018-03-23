@@ -159,7 +159,7 @@ void IndicatorCalendar::_setup_main_window()
     gtk_widget_hide_on_delete(main_window);
     gtk_container_add(GTK_CONTAINER(main_window), webview);
     g_signal_connect(main_window, "focus-out-event", G_CALLBACK(gtk_widget_hide), NULL);
-//    g_signal_connect(main_window, "show", G_CALLBACK(reposition), this);
+    g_signal_connect(main_window, "show", G_CALLBACK(reposition), this);
     g_signal_connect_after(main_window, "draw", G_CALLBACK(draw_border), this);
 }
 
@@ -229,6 +229,7 @@ on_button_press(GtkWidget *button, GdkEventButton *event, IndicatorCalendar *d)
 static void
 applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
 {
+
     //WebKitDOMElement *year_div;
     //WebKitDOMElement *month_div;
     //WebKitDOMDocument *doc;
