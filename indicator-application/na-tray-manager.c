@@ -411,13 +411,9 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 
   gboolean show = g_settings_get_boolean(settings, "show");
 
-  printf("Name=%s\n",Name);
-  printf("ch.res_name=%s\n",ch.res_name);
   if (Name == NULL){
-  	printf("ch.res_name=%s\n",ch.res_name);
 	g_settings_set_string (settings,"applet-name",ch.res_name);
   } else{
-  	printf("Name=%s\n",Name);
 	g_settings_set_string (settings,"applet-name", Name);
 	g_settings_set_string (settings,"applet-icon", Icon);
   }
