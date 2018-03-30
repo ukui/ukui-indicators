@@ -1,0 +1,12 @@
+#CalendarButton {
+     background-color:transparent; 
+}
+#CalendarButton:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+#CalendarButtonClicked {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+#CalendarButtonRelease {
+	background-color:transparent;
+}

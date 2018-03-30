@@ -44,7 +44,7 @@ GdkColor get_border_color(char *color_name);
 static gboolean draw_border(GtkWidget *widget, GdkEventExpose *event, IndicatorCalendar *d);
 
 bool ischinese = FALSE;
-
+GtkWidget *applet_button;
 IndicatorCalendar::IndicatorCalendar(AppletData *ad) :
     applet(ad->applet),
     orientation(ad->orientation),
@@ -75,6 +75,16 @@ IndicatorCalendar::IndicatorCalendar(AppletData *ad) :
     applet_button = gtk_button_new();
     gtk_button_set_relief(GTK_BUTTON(applet_button), GTK_RELIEF_NONE);
     gtk_widget_set_name(applet_button, "ukui-time-button");
+	
+    GtkCssProvider *provider1 = NULL;
+    GdkScreen *screen,*screen1;
+    provider1 = gtk_css_provider_new ();
+    screen1 = gdk_screen_get_default ();
+    gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
+    gtk_widget_set_name (GTK_WIDGET(applet_button),"CalendarButton");
+    
+
     g_signal_connect(applet_button, "clicked", G_CALLBACK(applet_button_clicked), this);
     g_signal_connect(applet_button, "button-press-event", G_CALLBACK(on_button_press), this);
     gtk_container_add(GTK_CONTAINER(applet_button), applet_label);
@@ -120,6 +130,18 @@ void IndicatorCalendar::_parse_rc()
     }
 }
 
+void gtk_widget_hide_css(GtkWidget *w, IndicatorCalendar *d)
+{
+        GtkCssProvider *provider1 = NULL;
+	GdkScreen *screen,*screen1;
+        provider1 = gtk_css_provider_new ();
+        screen1 = gdk_screen_get_default ();
+        gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
+        gtk_widget_set_name (GTK_WIDGET(applet_button),"CalendarButtonRelease");
+	gtk_widget_hide(w);
+}
+
 void IndicatorCalendar::_setup_main_window()
 {
     webview = webkit_web_view_new();
@@ -158,7 +180,7 @@ void IndicatorCalendar::_setup_main_window()
     gtk_window_set_gravity(GTK_WINDOW(main_window), GDK_GRAVITY_SOUTH_EAST);
     gtk_widget_hide_on_delete(main_window);
     gtk_container_add(GTK_CONTAINER(main_window), webview);
-    g_signal_connect(main_window, "focus-out-event", G_CALLBACK(gtk_widget_hide), NULL);
+    g_signal_connect(main_window, "focus-out-event", G_CALLBACK(gtk_widget_hide_css), NULL);
     g_signal_connect(main_window, "show", G_CALLBACK(reposition), this);
     g_signal_connect_after(main_window, "draw", G_CALLBACK(draw_border), this);
 }
@@ -238,10 +260,21 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     //year_div = webkit_dom_document_get_element_by_id(doc, "year_div");
     //month_div = webkit_dom_document_get_element_by_id(doc, "month_div");
 
+        GtkCssProvider *provider1 = NULL;
+	GdkScreen *screen,*screen1;
+        provider1 = gtk_css_provider_new ();
+        screen1 = gdk_screen_get_default ();
+        gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
+
     if (gtk_widget_get_visible(d->main_window) == FALSE) {
+        gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonClicked");
+
         gtk_widget_show_all(d->main_window);
         webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
     } else {
+        gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonRelease");
+
         //webkit_dom_element_set_class_name(year_div, "hidden_div");
         //webkit_dom_element_set_class_name(month_div, "hidden_div");
         gtk_widget_hide(d->main_window);

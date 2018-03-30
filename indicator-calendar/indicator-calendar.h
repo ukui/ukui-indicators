@@ -39,7 +39,6 @@ public:
     GtkWidget *main_window;
     GtkWidget *webview;
 
-    GtkWidget *applet_button;
     GtkWidget *applet_label;
     GtkWidget *event_box;
 

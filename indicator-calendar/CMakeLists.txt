@@ -21,5 +21,8 @@ target_link_libraries(
 install(DIRECTORY html/
         DESTINATION ${PACKAGE_DATA_DIR}/indicator-calendar/html)
 
+install(DIRECTORY style/
+        DESTINATION ${PACKAGE_DATA_DIR}/indicator-calendar/style)
+
 install(FILES ukui-calendar.rc calendar-button-bg.png
         DESTINATION "${PACKAGE_DATA_DIR}/indicator-calendar")
