@@ -140,6 +140,7 @@ void gtk_widget_hide_css(GtkWidget *w, IndicatorCalendar *d)
         gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
         gtk_widget_set_name (GTK_WIDGET(applet_button),"CalendarButtonRelease");
 	gtk_widget_hide(w);
+        webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
 }
 
 void IndicatorCalendar::_setup_main_window()
@@ -149,7 +150,12 @@ void IndicatorCalendar::_setup_main_window()
     g_signal_connect(webview, "show", G_CALLBACK(doc_loaded), this);
 
     std::string html_file_path(PACKAGE_DATA_DIR "/indicator-calendar/html/");
-    GdkColor color = get_border_color("ukuimenu_color");
+//    GdkColor color = get_border_color("ukuimenu_color");
+
+        GdkColor color;
+        GtkStyle *style=gtk_rc_get_style(applet_button);
+        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+
 //    char color_str[20] = { 0 };
 //    sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
     if (ischinese)
@@ -251,6 +257,69 @@ on_button_press(GtkWidget *button, GdkEventButton *event, IndicatorCalendar *d)
 static void
 applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
 {
+        GdkColor color;
+        GtkStyle *style=gtk_rc_get_style(w);
+        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+
+        char color_hex[10]={0};
+        char color_hex_red[4]={0};
+        char color_hex_green[4]={0};
+        char color_hex_blue[4]={0};
+
+        if((color.red/257/16)==0){
+                sprintf(color_hex_red,"0%x",color.red/257);
+        }
+        else{
+                sprintf(color_hex_red,"%x",color.red/257);
+        }
+        if((color.green/257)/16==0){
+                sprintf(color_hex_green,"0%x",color.green/257);
+        }
+        else{
+                sprintf(color_hex_green,"%x",color.green/257);
+        }
+        if((color.blue/257)/16==0){
+                sprintf(color_hex_blue,"0%x",color.blue/257);
+        }
+        else{
+                sprintf(color_hex_blue,"%x",color.blue/257);
+        }
+        sprintf(color_hex,"\#%s%s%s",color_hex_red,color_hex_green,color_hex_blue);
+
+	char *script=g_strdup_printf ("\
+				      document.getElementById('header').style.background='%s';\
+				      document.getElementById('day').style.color='%s';\
+				      document.getElementsByClassName('effect_button')[0].style.backgroundColor='%s';\
+				      document.getElementsByClassName('effect_button')[1].style.background='%s';\
+				      document.getElementsByClassName('effect_button')[2].style.background='%s';\
+				      document.getElementsByClassName('effect_button')[3].style.backgroundColor='%s';\
+				      document.getElementsByClassName('effect_button')[4].style.background='%s';\
+				      document.getElementsByClassName('effect_button')[5].style.background='%s';\
+				      var css = 'table td:hover{border: 1px solid %s;}';var style = document.createElement('style');\
+				      if (style.styleSheet) {\
+				          style.styleSheet.cssText = css;\
+				      } else {\
+                                          style.appendChild(document.createTextNode(css));\
+                                      }\
+				      document.getElementsByTagName('head')[0].appendChild(style);\
+				      var css = '.day_today{border: 1px solid %s;}';var style = document.createElement('style');\
+				      if (style.styleSheet) {\
+				          style.styleSheet.cssText = css;\
+				      } else {\
+                                          style.appendChild(document.createTextNode(css));\
+                                      }\
+				      document.getElementsByTagName('head')[0].appendChild(style);\
+				      var css = '.day_today:hover{border: 1px solid %s;}';var style = document.createElement('style');\
+				      if (style.styleSheet) {\
+				          style.styleSheet.cssText = css;\
+				      } else {\
+                                          style.appendChild(document.createTextNode(css));\
+                                      }\
+				      document.getElementsByTagName('head')[0].appendChild(style);\
+				      ",\
+				      color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex);
+	webkit_web_view_run_javascript(WEBKIT_WEB_VIEW(d->webview),script,NULL,NULL,NULL);
+
 
     //WebKitDOMElement *year_div;
     //WebKitDOMElement *month_div;
@@ -271,13 +340,14 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
         gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonClicked");
 
         gtk_widget_show_all(d->main_window);
-        webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
+//        webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
     } else {
         gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonRelease");
 
         //webkit_dom_element_set_class_name(year_div, "hidden_div");
         //webkit_dom_element_set_class_name(month_div, "hidden_div");
         gtk_widget_hide(d->main_window);
+        webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
     }
 
     //g_object_unref(doc);
@@ -313,7 +383,12 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
 
         std::string html_file_path(PACKAGE_DATA_DIR "/indicator-calendar/html/");
 
-	GdkColor color = get_border_color("ukuimenu_color");
+//	GdkColor color = get_border_color("ukuimenu_color");
+
+        GdkColor color;
+        GtkStyle *style=gtk_rc_get_style(d->main_window);
+        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+
 //	char color_str[20] = { 0 };
 //	sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
 	if (ischinese)
@@ -669,7 +744,11 @@ draw_border (GtkWidget *widget, GdkEventExpose *event, IndicatorCalendar *d)
         GtkAllocation alloc;
         gtk_widget_get_allocation(widget, &alloc);
 
-        GdkColor color = get_border_color ("ukuiside_color");
+//        GdkColor color = get_border_color ("ukuiside_color");
+
+        GdkColor color;
+        GtkStyle *style=gtk_rc_get_style(widget);
+        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
 
         // outer border
         cairo_set_source_rgb (cr, color.red / 65535.0, color.green / 65535.0, color.blue / 65535.0);
@@ -677,7 +756,10 @@ draw_border (GtkWidget *widget, GdkEventExpose *event, IndicatorCalendar *d)
         cairo_rectangle (cr, 0.5, 0.5, alloc.width - 1, alloc.height - 1);
         cairo_stroke (cr);
 
-        color = get_border_color ("ukuimenu_color");
+        style=gtk_rc_get_style(widget);
+        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+
+//        color = get_border_color ("ukuimenu_color");
 	cairo_set_source_rgb (cr, color.red / 65535.0, color.green / 65535.0, color.blue / 65535.0);
         cairo_set_line_width (cr, 4.0);
         cairo_rectangle (cr, 3, 3, alloc.width - 6, alloc.height - 6);
