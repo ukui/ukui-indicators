@@ -33,8 +33,8 @@ IndicatorApplication::IndicatorApplication(AppletData *ad) :
     orientation(ad->orientation),
     icon_size(16)
 {
-    char 	*path;
-    GSettings 	*settings;
+    char 	*path, *path1;
+    GSettings 	*settings, *settings1;
 
     tray = na_tray_new_for_screen(gtk_widget_get_screen(GTK_WIDGET(applet)), orientation);
     force_no_focus_padding(GTK_WIDGET(tray));
@@ -60,6 +60,11 @@ IndicatorApplication::IndicatorApplication(AppletData *ad) :
 
 		g_settings_set_int (settings, "number",0);
     }
+
+    path1 = g_strdup_printf ("%s/","/org/ukui/panel/toplevels/bottom");
+    settings1 = g_settings_new_with_path ("org.ukui.panel.toplevel",path1);
+    g_settings_set_int(settings1, "launcher-nums",0);
+
 }
 
 IndicatorApplication::~IndicatorApplication()

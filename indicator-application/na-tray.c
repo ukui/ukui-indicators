@@ -267,9 +267,19 @@ tray_added (NaTrayManager *manager,
             GtkWidget     *icon,
             TraysScreen   *trays_screen)
 {
+  int 		 num;
+  char          *path1;
+  GSettings     *settings1;
+
   NaTray *tray;
   NaTrayPrivate *priv;
   int position;
+
+  path1 = g_strdup_printf ("%s/","/org/ukui/panel/toplevels/bottom");
+  settings1 = g_settings_new_with_path ("org.ukui.panel.toplevel",path1);
+  num = g_settings_get_int (settings1, "launcher-nums");
+  num = num+1;
+  g_settings_set_int(settings1, "launcher-nums",num);
 
   tray = get_tray (trays_screen);
   if (tray == NULL)
@@ -293,6 +303,16 @@ tray_removed (NaTrayManager *manager,
               GtkWidget     *icon,
               TraysScreen   *trays_screen)
 {
+  int 		 num;
+  char          *path1;
+  GSettings     *settings1;
+
+  path1 = g_strdup_printf ("%s/","/org/ukui/panel/toplevels/bottom");
+  settings1 = g_settings_new_with_path ("org.ukui.panel.toplevel",path1);
+  num = g_settings_get_int(settings1, "launcher-nums");
+  num = num-1;
+  g_settings_set_int(settings1, "launcher-nums",num);
+
   NaTray *tray;
 
   tray = g_hash_table_lookup (trays_screen->icon_table, icon);
