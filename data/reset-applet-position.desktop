@@ -7,6 +7,6 @@ Terminal=false
 Type=Application
 Categories=Settings;
 Keywords=settings;
-NoDisplay=trues
+NoDisplay=true
 X-UKUI-Bugzilla-Bugzilla=UKUI
 X-UKUI-Autostart-Notify=false
