@@ -132,15 +132,15 @@ void IndicatorCalendar::_parse_rc()
 
 void gtk_widget_hide_css(GtkWidget *w, IndicatorCalendar *d)
 {
-        GtkCssProvider *provider1 = NULL;
+    GtkCssProvider *provider1 = NULL;
 	GdkScreen *screen,*screen1;
-        provider1 = gtk_css_provider_new ();
-        screen1 = gdk_screen_get_default ();
-        gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
-        gtk_widget_set_name (GTK_WIDGET(applet_button),"CalendarButtonRelease");
+    provider1 = gtk_css_provider_new ();
+    screen1 = gdk_screen_get_default ();
+    gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
+    gtk_widget_set_name (GTK_WIDGET(applet_button),"CalendarButtonRelease");
 	gtk_widget_hide(w);
-        webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
+    webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
 }
 
 void IndicatorCalendar::_setup_main_window()
@@ -152,9 +152,9 @@ void IndicatorCalendar::_setup_main_window()
     std::string html_file_path(PACKAGE_DATA_DIR "/indicator-calendar/html/");
 //    GdkColor color = get_border_color("ukuimenu_color");
 
-        GdkColor color;
-        GtkStyle *style=gtk_rc_get_style(applet_button);
-        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+    GdkColor color;
+    GtkStyle *style=gtk_rc_get_style(applet_button);
+    gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
 
 //    char color_str[20] = { 0 };
 //    sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
@@ -163,14 +163,14 @@ void IndicatorCalendar::_setup_main_window()
 //        char file[30] = {0};
 //        sprintf(file, "ukui.html.%s", color_str);
 //        html_file_path += file;
-	html_file_path += "ukui.html";        
+        html_file_path += "ukui.html";
     }
     else
     {
 //	char file[30] = {0};
 //        sprintf(file, "ukui-en.html.%s", color_str);
 //        html_file_path += file;
-	html_file_path += "ukui-en.html";
+        html_file_path += "ukui-en.html";
     }
 
     std::string html_file_uri("file://");
@@ -257,34 +257,31 @@ on_button_press(GtkWidget *button, GdkEventButton *event, IndicatorCalendar *d)
 static void
 applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
 {
-        GdkColor color;
-        GtkStyle *style=gtk_rc_get_style(w);
-        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+    GdkColor color;
+    GtkStyle *style=gtk_rc_get_style(w);
+    gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
 
-        char color_hex[10]={0};
-        char color_hex_red[4]={0};
-        char color_hex_green[4]={0};
-        char color_hex_blue[4]={0};
+    char color_hex[10]={0};
+    char color_hex_red[4]={0};
+    char color_hex_green[4]={0};
+    char color_hex_blue[4]={0};
 
-        if((color.red/257/16)==0){
-                sprintf(color_hex_red,"0%x",color.red/257);
-        }
-        else{
-                sprintf(color_hex_red,"%x",color.red/257);
-        }
-        if((color.green/257)/16==0){
-                sprintf(color_hex_green,"0%x",color.green/257);
-        }
-        else{
-                sprintf(color_hex_green,"%x",color.green/257);
-        }
-        if((color.blue/257)/16==0){
-                sprintf(color_hex_blue,"0%x",color.blue/257);
-        }
-        else{
-                sprintf(color_hex_blue,"%x",color.blue/257);
-        }
-        sprintf(color_hex,"\#%s%s%s",color_hex_red,color_hex_green,color_hex_blue);
+    if((color.red/257/16)==0){
+        sprintf(color_hex_red,"0%x",color.red/257);
+    } else {
+        sprintf(color_hex_red,"%x",color.red/257);
+    }
+    if((color.green/257)/16==0){
+        sprintf(color_hex_green,"0%x",color.green/257);
+    } else {
+        sprintf(color_hex_green,"%x",color.green/257);
+    }
+    if((color.blue/257)/16==0){
+        sprintf(color_hex_blue,"0%x",color.blue/257);
+    } else {
+        sprintf(color_hex_blue,"%x",color.blue/257);
+    }
+    sprintf(color_hex,"\#%s%s%s",color_hex_red,color_hex_green,color_hex_blue);
 
 	char *script=g_strdup_printf ("\
 				      document.getElementById('header').style.background='%s';\
@@ -329,12 +326,12 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     //year_div = webkit_dom_document_get_element_by_id(doc, "year_div");
     //month_div = webkit_dom_document_get_element_by_id(doc, "month_div");
 
-        GtkCssProvider *provider1 = NULL;
+    GtkCssProvider *provider1 = NULL;
 	GdkScreen *screen,*screen1;
-        provider1 = gtk_css_provider_new ();
-        screen1 = gdk_screen_get_default ();
-        gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
+    provider1 = gtk_css_provider_new ();
+    screen1 = gdk_screen_get_default ();
+    gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
 
     if (gtk_widget_get_visible(d->main_window) == FALSE) {
         gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonClicked");
@@ -391,28 +388,26 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
 
 //	char color_str[20] = { 0 };
 //	sprintf(color_str, "%d%d%d", color.red, color.green, color.blue);
-	if (ischinese)
-	{
+        if (ischinese)
+        {
 //		char file[30] = {0};
 //		sprintf(file, "ukui.html.%s", color_str);
 //		html_file_path += file;
-		html_file_path += "ukui.html";		
-	}
-	else
-	{
+            html_file_path += "ukui.html";
+        } else {
 //		char file[30] = {0};
 //		sprintf(file, "ukui-en.html.%s", color_str);
 //		html_file_path += file;
-		html_file_path += "ukui-en.html";
-	}
+            html_file_path += "ukui-en.html";
+        }
 
-	std::string html_file_uri("file://");
+        std::string html_file_uri("file://");
         html_file_uri += html_file_path;
 
         gtk_widget_modify_bg(d->main_window, GTK_STATE_NORMAL, &color);
         webkit_web_view_load_uri(WEBKIT_WEB_VIEW(d->webview), html_file_uri.c_str());
 
-	gtk_widget_set_name(d->applet_label, "ukui-time-label");
+        gtk_widget_set_name(d->applet_label, "ukui-time-label");
     }
 }
 
