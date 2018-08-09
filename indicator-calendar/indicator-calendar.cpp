@@ -133,14 +133,13 @@ void IndicatorCalendar::_parse_rc()
 void gtk_widget_hide_css(GtkWidget *w, IndicatorCalendar *d)
 {
     GtkCssProvider *provider1 = NULL;
-	GdkScreen *screen,*screen1;
+    GdkScreen *screen,*screen1;
     provider1 = gtk_css_provider_new ();
     screen1 = gdk_screen_get_default ();
     gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     gtk_css_provider_load_from_file(provider1, g_file_new_for_path("/usr/share/ukui-indicators/indicator-calendar/style/indicators.css"), NULL);
     gtk_widget_set_name (GTK_WIDGET(applet_button),"CalendarButtonRelease");
-	gtk_widget_hide(w);
-    webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
+    gtk_widget_hide(w);
 }
 
 void IndicatorCalendar::_setup_main_window()
@@ -283,7 +282,7 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     }
     sprintf(color_hex,"\#%s%s%s",color_hex_red,color_hex_green,color_hex_blue);
 
-	char *script=g_strdup_printf ("\
+    char *script=g_strdup_printf ("\
 				      document.getElementById('header').style.background='%s';\
 				      document.getElementById('day').style.color='%s';\
 				      document.getElementsByClassName('effect_button')[0].style.backgroundColor='%s';\
@@ -327,7 +326,7 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     //month_div = webkit_dom_document_get_element_by_id(doc, "month_div");
 
     GtkCssProvider *provider1 = NULL;
-	GdkScreen *screen,*screen1;
+    GdkScreen *screen,*screen1;
     provider1 = gtk_css_provider_new ();
     screen1 = gdk_screen_get_default ();
     gtk_style_context_add_provider_for_screen (screen1, GTK_STYLE_PROVIDER (provider1), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -414,8 +413,7 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
 gchar *update_label(IndicatorCalendar *d, char *weekday, gint year, gint month, gint day, gint hour)
 {
     gchar *markup = NULL;
-    if (ischinese)
-    {
+    if (ischinese) {
         if (d->use_24h_format == FALSE)
             if (hour > 12)
                 markup = g_strdup_printf("<span>%s%s下午\n %04d/%02d/%02d </span>", d->time.c_str(), weekday, year, month, day);
@@ -423,9 +421,7 @@ gchar *update_label(IndicatorCalendar *d, char *weekday, gint year, gint month, 
                 markup = g_strdup_printf("<span>%s%s上午\n %04d/%02d/%02d </span>", d->time.c_str(), weekday, year, month, day);
         else
             markup = g_strdup_printf("<span>%s %s\n %04d/%02d/%02d </span>", d->time.c_str(), weekday, year, month, day);
-    }
-    else
-    {
+    } else {
         if (d->use_24h_format == FALSE)
             if (hour > 12)
                 markup = g_strdup_printf("<span>%sAM %s\n %04d/%02d/%02d </span>", d->time.c_str(), weekday, year, month, day);
@@ -454,96 +450,68 @@ update_time(IndicatorCalendar *d)
     second = g_date_time_get_second(datetime);
     g_date_time_get_ymd(datetime, &year, &month, &day);
 
-    if (week == 1)
-    {
-	if (ischinese)
-	{
+    if (week == 1) {
+        if (ischinese) {
             sprintf(datestr, "%d年%d月%d日星期一", year, month, day);
-	    markup = update_label(d, (char *)("周一"), year, month, day, hour);
-	}
-	else
-	{
-	    sprintf(datestr, "%s Mon  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	    markup = update_label(d, (char *)"Mon", year, month, day, hour);
-	}
+	        markup = update_label(d, (char *)("周一"), year, month, day, hour);
+        } else {
+	        sprintf(datestr, "%s Mon  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"Mon", year, month, day, hour);
+	    }
     }
-    if (week == 2)
-    {
-	if (ischinese)
-	{
-	    markup = update_label(d, (char *)("周二"), year, month, day, hour);
+    if (week == 2) {
+	    if (ischinese) {
+	        markup = update_label(d, (char *)("周二"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期二", year, month, day);
-	}
-	else
-	{
-	    markup = update_label(d, (char *)("Tues"), year, month, day, hour);
-	    sprintf(datestr, "%s Tues  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	}
+        } else {
+	        markup = update_label(d, (char *)("Tues"), year, month, day, hour);
+	        sprintf(datestr, "%s Tues  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	    }
     }
-    if (week == 3)
-    {
-	if (ischinese)
-	{
+    if (week == 3) {
+	    if (ischinese) {
             sprintf(datestr, "%d年%d月%d日星期三", year, month, day);
-	    markup = update_label(d, (char *)("周三"), year, month, day, hour);
-	}
-	else
-	{
-	    markup = update_label(d, (char *)("Wed"), year, month, day, hour);
-	    sprintf(datestr, "%s Wed  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	}
+	        markup = update_label(d, (char *)("周三"), year, month, day, hour);
+	    } else {
+	        markup = update_label(d, (char *)("Wed"), year, month, day, hour);
+	        sprintf(datestr, "%s Wed  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	    }
     }
-    if (week == 4)
-    {
-	if (ischinese)
-	{
-	    markup = update_label(d, (char *)("周四"), year, month, day, hour);
+    if (week == 4) {
+	    if (ischinese) {
+	        markup = update_label(d, (char *)("周四"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期四", year, month, day);
-	}
-	else
-	{
-	    markup = update_label(d, (char *)("Thur"), year, month, day, hour);
-	    sprintf(datestr, "%s Thur  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	}
+	    } else {
+	        markup = update_label(d, (char *)("Thur"), year, month, day, hour);
+	        sprintf(datestr, "%s Thur  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	    }
     }
-    if (week == 5)
-    {
-	if (ischinese)
-	{
-	    markup = update_label(d, (char *)("周五"), year, month, day, hour);
+    if (week == 5) {
+	    if (ischinese) {
+	        markup = update_label(d, (char *)("周五"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期五", year, month, day);
-	}
-	else
-	{
-	    markup = update_label(d, (char *)("Fri"), year, month, day, hour);
-	    sprintf(datestr, "%s Fri  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	}
+	    } else {
+	        markup = update_label(d, (char *)("Fri"), year, month, day, hour);
+	        sprintf(datestr, "%s Fri  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	    }
     }
-    if (week == 6)
-    {
-	if (ischinese)
-	{
-	    markup = update_label(d, (char *)("周六"), year, month, day, hour);
+    if (week == 6) {
+	    if (ischinese) {
+	        markup = update_label(d, (char *)("周六"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期六", year, month, day);
-	}
-	else
-	{
-	    markup = update_label(d, (char *)("Sat"), year, month, day, hour);
-	    sprintf(datestr, "%s Sat  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	}
+	    } else {
+	        markup = update_label(d, (char *)("Sat"), year, month, day, hour);
+	        sprintf(datestr, "%s Sat  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	    }
     }
-    if (week == 7)
-    {
-	if (ischinese)
-	{
-	    markup = update_label(d, (char *)("周日"), year, month, day, hour);
+    if (week == 7) {
+	    if (ischinese) {
+	        markup = update_label(d, (char *)("周日"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期天", year, month, day);
-	}
-	else
-	{
-	    markup = update_label(d, (char *)("Sun"), year, month, day, hour);
-	    sprintf(datestr, "%s Sun  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	}
+	    } else {
+	        markup = update_label(d, (char *)("Sun"), year, month, day, hour);
+	        sprintf(datestr, "%s Sun  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	    }
     }
 
     gtk_widget_set_tooltip_text(d->applet_label, datestr);
@@ -677,38 +645,38 @@ static void reposition(GtkWidget *widget, IndicatorCalendar *d)
 GdkColor
 get_border_color (char *color_name)
 {
-        GdkColor color;
+   GdkColor color;
 
-        GObject *gs = (GObject *)gtk_settings_get_default ();
-        GValue color_scheme_value = G_VALUE_INIT;
-        g_value_init (&color_scheme_value, G_TYPE_STRING);
-        g_object_get_property (gs, "gtk-color-scheme", &color_scheme_value);
-        gchar *color_scheme = (char *)g_value_get_string (&color_scheme_value);
-        gchar color_spec[16] = { 0 };
-        char *needle = strstr(color_scheme, color_name);
-        if (needle) {
-                while (1) {
-                        if (color_spec[0] != '#') {
-                                color_spec[0] = *needle;
-                                needle++;
-                                continue;
-                        }
+   GObject *gs = (GObject *)gtk_settings_get_default ();
+   GValue color_scheme_value = G_VALUE_INIT;
+   g_value_init (&color_scheme_value, G_TYPE_STRING);
+   g_object_get_property (gs, "gtk-color-scheme", &color_scheme_value);
+   gchar *color_scheme = (char *)g_value_get_string (&color_scheme_value);
+   gchar color_spec[16] = { 0 };
+   char *needle = strstr(color_scheme, color_name);
+   if (needle) {
+       while (1) {
+           if (color_spec[0] != '#') {
+               color_spec[0] = *needle;
+               needle++;
+               continue;
+           }
 
-                        if ((*needle >= 0x30 && *needle <= 0x39) ||
-                            (*needle >= 0x41 && *needle <= 0x46) ||
-                            (*needle >= 0x61 && *needle <= 0x66)) {
-                                color_spec[strlen(color_spec)] = *needle;
-                                needle++;
-                        } else {
-                                break;
-                        }
-                }
-                gdk_color_parse (color_spec, &color);
-        } else {
-                gdk_color_parse ("#3B9DC5", &color);
-        }
+           if ((*needle >= 0x30 && *needle <= 0x39) ||
+               (*needle >= 0x41 && *needle <= 0x46) ||
+               (*needle >= 0x61 && *needle <= 0x66)) {
+               color_spec[strlen(color_spec)] = *needle;
+               needle++;
+           } else {
+               break;
+           }
+       }
+       gdk_color_parse (color_spec, &color);
+   } else {
+       gdk_color_parse ("#3B9DC5", &color);
+   }
 
-        return color;
+   return color;
 }
 
 /*static gboolean draw_border(GtkWidget *widget, GdkEventExpose *event, IndicatorCalendar *d)
@@ -734,34 +702,34 @@ static gboolean
 draw_border (GtkWidget *widget, GdkEventExpose *event, IndicatorCalendar *d)
 {
 	/*window成员使用GTK3中新的获取方式*/
-        cairo_t *cr = gdk_cairo_create (gtk_widget_get_window(widget));
+    cairo_t *cr = gdk_cairo_create (gtk_widget_get_window(widget));
 
-        GtkAllocation alloc;
-        gtk_widget_get_allocation(widget, &alloc);
+    GtkAllocation alloc;
+    gtk_widget_get_allocation(widget, &alloc);
 
 //        GdkColor color = get_border_color ("ukuiside_color");
 
-        GdkColor color;
-        GtkStyle *style=gtk_rc_get_style(widget);
-        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+    GdkColor color;
+    GtkStyle *style=gtk_rc_get_style(widget);
+    gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
 
-        // outer border
-        cairo_set_source_rgb (cr, color.red / 65535.0, color.green / 65535.0, color.blue / 65535.0);
-        cairo_set_line_width (cr, 1.0);
-        cairo_rectangle (cr, 0.5, 0.5, alloc.width - 1, alloc.height - 1);
-        cairo_stroke (cr);
+    // outer border
+    cairo_set_source_rgb (cr, color.red / 65535.0, color.green / 65535.0, color.blue / 65535.0);
+    cairo_set_line_width (cr, 1.0);
+    cairo_rectangle (cr, 0.5, 0.5, alloc.width - 1, alloc.height - 1);
+    cairo_stroke (cr);
 
-        style=gtk_rc_get_style(widget);
-        gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
+    style=gtk_rc_get_style(widget);
+    gtk_style_lookup_color (style,"panel_normal_bg_color",&color);
 
-//        color = get_border_color ("ukuimenu_color");
-	cairo_set_source_rgb (cr, color.red / 65535.0, color.green / 65535.0, color.blue / 65535.0);
-        cairo_set_line_width (cr, 4.0);
-        cairo_rectangle (cr, 3, 3, alloc.width - 6, alloc.height - 6);
-        cairo_stroke (cr);
-//        gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &color);
+//   color = get_border_color ("ukuimenu_color");
+    cairo_set_source_rgb (cr, color.red / 65535.0, color.green / 65535.0, color.blue / 65535.0);
+    cairo_set_line_width (cr, 4.0);
+    cairo_rectangle (cr, 3, 3, alloc.width - 6, alloc.height - 6);
+    cairo_stroke (cr);
+//   gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &color);
 
-	cairo_destroy(cr);
-        return FALSE;
+    cairo_destroy(cr);
+    return FALSE;
 }
 
