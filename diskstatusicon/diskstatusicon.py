@@ -1,0 +1,314 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import gi
+import gettext
+import sys
+from  multiprocessing import Process
+import time
+import subprocess
+#gi.require_version("Gtk","3.0")
+from gi.repository import Gtk, GdkPixbuf, Gdk, GObject,GLib,Notify
+from gi.repository import Gio
+
+SYSTEM=1 
+DISKSTATUSICON=2
+
+def get_process_id(name):
+    child = subprocess.Popen(["pgrep","-f",name],stdout=subprocess.PIPE,shell=False)
+    response = child.communicate()[0]
+    return response
+
+def umount_mount_callback(source_obj,res,user_data):
+    print('cb start')
+    GError **error
+    bUnmounted = Gio.Mount.eject_with_operation_finish(G_MOUNT(source_obj),res,error)
+    if(True == bUnmounted):
+        print('unmount successful')
+    else:
+        #print((*error)->message)
+        print('unmount error')
+    
+##弹出设备
+def eject_callback(menu_item, mount,trayIcon):
+    if mount == None:
+        return
+    trayIcon.eject=DISKSTATUSICON
+#    real_mount = Gio.Volume.get_mount(mount)
+    real_mount=mount.get_volume()
+    name=mount.get_name()
+
+    if hasattr(mount.get_icon(),'get_names'):
+        if mount.get_icon().get_names()[0] == 'media-optical-dvd-r':
+            trayIcon.dvd_icon_name=mount.get_icon().get_names()[0] 
+    driver = Gio.Volume.get_drive(real_mount)
+    Notify.init("Removable Device")
+    if mount.can_eject():
+        Gio.Mount.eject_with_operation(mount,Gio.MountUnmountFlags.NONE,None, None, None, None,None)
+    if driver.can_stop():
+        driver.stop(Gio.MountUnmountFlags.FORCE, None, None, None)
+    message=name+"存储设备现在可安全地从计算机移除"
+    notification=Notify.Notification.new('安全地移除设备',message,'dialog-information')
+    notification.show()
+	
+    time.sleep(2)
+
+##执行系统命令函数
+def os_system_proc(cmd):
+    os.system(cmd)
+
+##打开设备
+def open_callback(menu_item, mount):
+    if mount == None:
+        return
+    comd_start = 'peony'
+    #real_mount = Gio.Volume.get_volumes(mount)
+    real_mount=mount
+    file = Gio.Mount.get_default_location(real_mount)
+    #file = Gio.Volume.get_activation_root(mount)
+    if hasattr(Gio.File.get_path(file),'replace'):
+    	path = Gio.File.get_path(file).replace(" ","\ ").replace("(","\(").replace(")","\)")
+    else:
+	path = Gio.File.get_path(file)
+    if None == path:
+        path = Gio.File.get_uri(file)
+        if None == path:
+            return
+    comd_line = comd_start + " " +path
+    p = Process(target=os_system_proc,args=(comd_line,))
+    p.start()
+
+def get_icon_location(device):
+    location="/usr/share/icons/ukui-icon-theme/16x16/devices/"
+    icon_png_location=location+device+".png"
+    icon_svg_location=location+device+".svg"
+    if os.path.exists(icon_png_location):
+        return icon_png_location
+    elif os.path.exists(icon_svg_location):
+        return icon_svg_location
+    else:
+        return location+"drive-harddisk.png"
+
+##有新的外设挂载
+def mount_added_callback (volumeMonitor,mount,trayIcon):
+    mounts = Gio.VolumeMonitor.get_mounts (volumeMonitor)
+#    mounts = Gio.VolumeMonitor.get_volumes (volumeMonitor)
+
+    if trayIcon.right_menu != None:
+        trayIcon.right_menu.hide()
+        trayIcon.right_menu.destroy()
+        trayIcon.right_menu = None
+
+    if trayIcon.left_menu != None:
+        trayIcon.left_menu.hide()
+        trayIcon.left_menu.destroy()
+        trayIcon.left_menu = None
+
+    if (len(mounts) == 0):
+        trayIcon.statusIcon.set_visible(False)
+        return
+
+    trayIcon.left_menu = Gtk.Menu.new ()
+    trayIcon.right_menu = Gtk.Menu.new ()
+
+    bHaveMount = False
+    paths=[]
+    for l in mounts:
+	file = Gio.Mount.get_default_location(l)
+    	path = Gio.File.get_uri(file)
+	paths.append(path)
+##更新左右键菜单
+    for l in mounts:
+	file = Gio.Mount.get_default_location(l)
+	path1 = Gio.File.get_uri(file)
+	if path1 in paths:
+            real_mount=l.get_volume()
+            driver = Gio.Volume.get_drive(real_mount)
+            if(True == driver.can_eject() or True == driver.can_stop()):
+                eject_label = '弹出'
+                open_label = '打开'
+                name = l.get_name()
+                eject_label = eject_label + name
+                open_label = open_label + name
+  	        #添加图标
+                ejectItem= Gtk.ImageMenuItem()
+                ejectItem.set_label(eject_label)
+                openItem= Gtk.ImageMenuItem()
+	        openItem.set_label(open_label)
+                if hasattr(l.get_icon(),'get_names'):
+	    	    icon_location=get_icon_location(l.get_icon().get_names()[0])
+	            ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+	            openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                else:
+		    icon_location="/usr/share/icons/ukui-icon-theme/16x16/devices/"+l.get_symbolic_icon().to_string().split()[4]+".svg"
+		    if (not os.path.exists(icon_location)):
+		        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+        			filename=l.get_icon().to_string(), 
+	        		width=16, 
+        			height=16, 
+	        		preserve_aspect_ratio=True)
+			icon = Gtk.Image.new_from_pixbuf(pixbuf)
+			icon1 = Gtk.Image.new_from_pixbuf(pixbuf)
+	                ejectItem.set_image(icon)
+	        	openItem.set_image(icon1)
+		    else:
+	                ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+	                openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                settings = Gtk.Settings.get_default()
+	        settings.set_property("gtk-menu-images", True)
+                ejectItem.connect('activate',eject_callback,l,trayIcon)
+                openItem.connect('activate',open_callback,l)
+                super(Gtk.Menu,trayIcon.left_menu).append(openItem)
+                super(Gtk.Menu, trayIcon.right_menu).append(ejectItem)
+                bHaveMount = True
+        #判断是否是重复的路径,重复就置为0，主要针对空白cd盘，会挂载两次的问题
+	for path in paths:
+	    if paths[paths.index(path)]==path1 and paths.count(path1)>1:
+		for path2 in paths:
+	            if paths[paths.index(path2)]==path1:
+			paths[paths.index(path2)]=0
+
+    if (False == bHaveMount):
+        trayIcon.statusIcon.set_visible(False)
+        return
+
+    trayIcon.right_menu.show_all()
+    trayIcon.left_menu.show_all()
+    if True != trayIcon.statusIcon.get_visible():
+        trayIcon.statusIcon.set_visible(True)
+
+##有设备移除
+def mount_removed_callback (volumeMonitor,mount,trayIcon):
+    if trayIcon.eject == SYSTEM:
+	mounts=volumeMonitor.get_mounts ()
+    if trayIcon.eject == DISKSTATUSICON:
+	mounts=volumeMonitor.get_volumes ()
+    if trayIcon.right_menu != None:
+        trayIcon.right_menu.hide()
+        trayIcon.right_menu.destroy()
+        trayIcon.right_menu = None
+
+    if trayIcon.left_menu != None:
+        trayIcon.left_menu.hide()
+        trayIcon.left_menu.destroy()
+        trayIcon.left_menu = None
+    mounts_value=volumeMonitor.get_mounts ()
+    if len(mounts) == 0 or len(mounts_value) == 0:
+        trayIcon.statusIcon.set_visible (False)
+	trayIcon.eject=SYSTEM
+        return
+
+    trayIcon.left_menu = Gtk.Menu.new ()
+    trayIcon.right_menu = Gtk.Menu.new ()
+
+    bHaveMount = False
+
+    mounts=volumeMonitor.get_mounts ()
+    paths=[]
+    for l in mounts:
+	file = Gio.Mount.get_default_location(l)
+    	path = Gio.File.get_uri(file)
+	paths.append(path)
+##更新左右键菜单
+    for l in mounts:
+	file = Gio.Mount.get_default_location(l)
+	path1 = Gio.File.get_uri(file)
+	if path1 in paths:
+            real_mount=l.get_volume()
+            driver = Gio.Volume.get_drive(real_mount)
+            if(True == driver.can_eject() or True == driver.can_stop()):
+                eject_label = '弹出'
+                open_label = '打开'
+                name = l.get_name()
+                eject_label = eject_label + name
+                open_label = open_label + name
+  	        #添加图标
+                ejectItem= Gtk.ImageMenuItem()
+                ejectItem.set_label(eject_label)
+                openItem= Gtk.ImageMenuItem()
+	        openItem.set_label(open_label)
+                if hasattr(l.get_icon(),'get_names'):
+	    	    icon_location=get_icon_location(l.get_icon().get_names()[0])
+	            ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+	            openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                else:
+		    icon_location="/usr/share/icons/ukui-icon-theme/16x16/devices/"+l.get_symbolic_icon().to_string().split()[4]+".svg"
+		    if (not os.path.exists(icon_location)):
+		        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+        			filename=l.get_icon().to_string(), 
+	        		width=16, 
+        			height=16, 
+	        		preserve_aspect_ratio=True)
+			icon = Gtk.Image.new_from_pixbuf(pixbuf)
+			icon1 = Gtk.Image.new_from_pixbuf(pixbuf)
+	                ejectItem.set_image(icon)
+	        	openItem.set_image(icon1)
+		    else:
+	                ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+	                openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                settings = Gtk.Settings.get_default()
+	        settings.set_property("gtk-menu-images", True)
+                ejectItem.connect('activate',eject_callback,l,trayIcon)
+                openItem.connect('activate',open_callback,l)
+                super(Gtk.Menu,trayIcon.left_menu).append(openItem)
+                super(Gtk.Menu, trayIcon.right_menu).append(ejectItem)
+                bHaveMount = True
+        #判断是否是重复的路径,重复就置为0，主要针对空白cd盘，会挂载两次的问题
+	for path in paths:
+	    if paths[paths.index(path)]==path1 and paths.count(path1)>1:
+		for path2 in paths:
+	            if paths[paths.index(path2)]==path1:
+			paths[paths.index(path2)]=0
+
+    if trayIcon.eject == DISKSTATUSICON:
+       trayIcon.eject=SYSTEM
+
+    if (False == bHaveMount):
+        trayIcon.statusIcon.set_visible(False)
+        return
+
+    trayIcon.right_menu.show_all()
+    trayIcon.left_menu.show_all()
+    if True != trayIcon.statusIcon.get_visible():
+        trayIcon.statusIcon.set_visible(True)
+
+##鼠标点击托盘图标
+def button_press_callback(statuIcon,event,trayIcon):
+    if event.button == 1:##左击
+        trayIcon.left_menu.popup(None,None,Gtk.StatusIcon.position_menu,trayIcon.statusIcon,1,event.time)
+    elif event.button == 3:##右击        # trayIcon.left_menu.menu_shell.append (openItem)
+        # trayIcon.right_menu.menu._shell.append (ejectItem)
+        trayIcon.right_menu.popup (None,None,Gtk.StatusIcon.position_menu,trayIcon.statusIcon,3,event.time)
+
+class TrayIcon :
+    def __init__(self):
+        pid = get_process_id("python /usr/bin/diskstatusicon.py")
+        pids=pid.split()
+        if len(pids) != 1:
+            return
+        self.dvd_icon_name=""
+	self.eject=SYSTEM
+        self.statusIcon = Gtk.StatusIcon.new_from_file ("/usr/share/icons/ukui-icon-theme/16x16/devices/drive-removable-media-usb.png")
+        self.left_menu = Gtk.Menu.new()
+        self.right_menu = Gtk.Menu.new()
+        self.volumeMonitor = Gio.VolumeMonitor.get()
+        self.statusIcon.set_tooltip_text("移动设备")
+        self.volumeMonitor.connect('mount_added',mount_added_callback,self)
+        self.volumeMonitor.connect('mount_removed',mount_removed_callback,self)
+        self.statusIcon.connect ('button-press-event',button_press_callback,self)
+        self.statusIcon.set_visible(False)
+
+        mount_added_callback(self.volumeMonitor,None,self)
+
+        Gtk.main()
+
+if __name__ == "__main__":
+    trayIcon = TrayIcon()
+    Gtk.main_quit()
+
+
+
+
+
+

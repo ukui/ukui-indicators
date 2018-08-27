@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Diskstatusicon
+Exec=python /usr/bin/diskstatusicon.py
+Terminal=false
+Type=Application
+StartupNotify=false
+NoDisplay=true
+OnlyShowIn=UKUI;
+X-UKUI-Autostart-Phase=Desktop
+X-UKUI-Autostart-Notify=true
+X-UKUI-AutoRestart=false
+X-UKUI-Autostart-Delay=25
