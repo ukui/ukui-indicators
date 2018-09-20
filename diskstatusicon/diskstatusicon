@@ -70,7 +70,7 @@ def open_callback(menu_item, mount):
     if hasattr(Gio.File.get_path(file),'replace'):
     	path = Gio.File.get_path(file).replace(" ","\ ").replace("(","\(").replace(")","\)")
     else:
-	path = Gio.File.get_path(file)
+        path = Gio.File.get_path(file)
     if None == path:
         path = Gio.File.get_uri(file)
         if None == path:
@@ -115,14 +115,14 @@ def mount_added_callback (volumeMonitor,mount,trayIcon):
     bHaveMount = False
     paths=[]
     for l in mounts:
-	file = Gio.Mount.get_default_location(l)
-    	path = Gio.File.get_uri(file)
-	paths.append(path)
+        file = Gio.Mount.get_default_location(l)
+        path = Gio.File.get_uri(file)
+        paths.append(path)
 ##更新左右键菜单
     for l in mounts:
-	file = Gio.Mount.get_default_location(l)
-	path1 = Gio.File.get_uri(file)
-	if path1 in paths:
+        file = Gio.Mount.get_default_location(l)
+        path1 = Gio.File.get_uri(file)
+        if path1 in paths:
             real_mount=l.get_volume()
             driver = Gio.Volume.get_drive(real_mount)
             if(True == driver.can_eject() or True == driver.can_stop()):
@@ -135,39 +135,39 @@ def mount_added_callback (volumeMonitor,mount,trayIcon):
                 ejectItem= Gtk.ImageMenuItem()
                 ejectItem.set_label(eject_label)
                 openItem= Gtk.ImageMenuItem()
-	        openItem.set_label(open_label)
+                openItem.set_label(open_label)
                 if hasattr(l.get_icon(),'get_names'):
-	    	    icon_location=get_icon_location(l.get_icon().get_names()[0])
-	            ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
-	            openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                    icon_location=get_icon_location(l.get_icon().get_names()[0])
+                    ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+                    openItem.set_image(Gtk.Image.new_from_file(icon_location))
                 else:
-		    icon_location="/usr/share/icons/ukui-icon-theme/16x16/devices/"+l.get_symbolic_icon().to_string().split()[4]+".svg"
-		    if (not os.path.exists(icon_location)):
-		        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    icon_location="/usr/share/icons/ukui-icon-theme/16x16/devices/"+l.get_symbolic_icon().to_string().split()[4]+".svg"
+                    if (not os.path.exists(icon_location)):
+                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
         			filename=l.get_icon().to_string(), 
 	        		width=16, 
         			height=16, 
 	        		preserve_aspect_ratio=True)
-			icon = Gtk.Image.new_from_pixbuf(pixbuf)
-			icon1 = Gtk.Image.new_from_pixbuf(pixbuf)
-	                ejectItem.set_image(icon)
-	        	openItem.set_image(icon1)
-		    else:
-	                ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
-	                openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                        icon = Gtk.Image.new_from_pixbuf(pixbuf)
+                        icon1 = Gtk.Image.new_from_pixbuf(pixbuf)
+                        ejectItem.set_image(icon)
+                        openItem.set_image(icon1)
+                    else:
+                        ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+                        openItem.set_image(Gtk.Image.new_from_file(icon_location))
                 settings = Gtk.Settings.get_default()
-	        settings.set_property("gtk-menu-images", True)
+                settings.set_property("gtk-menu-images", True)
                 ejectItem.connect('activate',eject_callback,l,trayIcon)
                 openItem.connect('activate',open_callback,l)
                 super(Gtk.Menu,trayIcon.left_menu).append(openItem)
                 super(Gtk.Menu, trayIcon.right_menu).append(ejectItem)
                 bHaveMount = True
         #判断是否是重复的路径,重复就置为0，主要针对空白cd盘，会挂载两次的问题
-	for path in paths:
-	    if paths[paths.index(path)]==path1 and paths.count(path1)>1:
-		for path2 in paths:
-	            if paths[paths.index(path2)]==path1:
-			paths[paths.index(path2)]=0
+        for path in paths:
+            if paths[paths.index(path)]==path1 and paths.count(path1)>1:
+                for path2 in paths:
+                    if paths[paths.index(path2)]==path1:
+                        paths[paths.index(path2)]=0
 
     if (False == bHaveMount):
         trayIcon.statusIcon.set_visible(False)
@@ -181,9 +181,9 @@ def mount_added_callback (volumeMonitor,mount,trayIcon):
 ##有设备移除
 def mount_removed_callback (volumeMonitor,mount,trayIcon):
     if trayIcon.eject == SYSTEM:
-	mounts=volumeMonitor.get_mounts ()
+        mounts=volumeMonitor.get_mounts ()
     if trayIcon.eject == DISKSTATUSICON:
-	mounts=volumeMonitor.get_volumes ()
+        mounts=volumeMonitor.get_volumes ()
     if trayIcon.right_menu != None:
         trayIcon.right_menu.hide()
         trayIcon.right_menu.destroy()
@@ -196,7 +196,7 @@ def mount_removed_callback (volumeMonitor,mount,trayIcon):
     mounts_value=volumeMonitor.get_mounts ()
     if len(mounts) == 0 or len(mounts_value) == 0:
         trayIcon.statusIcon.set_visible (False)
-	trayIcon.eject=SYSTEM
+        trayIcon.eject=SYSTEM
         return
 
     trayIcon.left_menu = Gtk.Menu.new ()
@@ -207,14 +207,14 @@ def mount_removed_callback (volumeMonitor,mount,trayIcon):
     mounts=volumeMonitor.get_mounts ()
     paths=[]
     for l in mounts:
-	file = Gio.Mount.get_default_location(l)
-    	path = Gio.File.get_uri(file)
-	paths.append(path)
+        file = Gio.Mount.get_default_location(l)
+        path = Gio.File.get_uri(file)
+        paths.append(path)
 ##更新左右键菜单
     for l in mounts:
-	file = Gio.Mount.get_default_location(l)
-	path1 = Gio.File.get_uri(file)
-	if path1 in paths:
+        file = Gio.Mount.get_default_location(l)
+        path1 = Gio.File.get_uri(file)
+        if path1 in paths:
             real_mount=l.get_volume()
             driver = Gio.Volume.get_drive(real_mount)
             if(True == driver.can_eject() or True == driver.can_stop()):
@@ -227,39 +227,39 @@ def mount_removed_callback (volumeMonitor,mount,trayIcon):
                 ejectItem= Gtk.ImageMenuItem()
                 ejectItem.set_label(eject_label)
                 openItem= Gtk.ImageMenuItem()
-	        openItem.set_label(open_label)
+                openItem.set_label(open_label)
                 if hasattr(l.get_icon(),'get_names'):
-	    	    icon_location=get_icon_location(l.get_icon().get_names()[0])
-	            ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
-	            openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                    icon_location=get_icon_location(l.get_icon().get_names()[0])
+                    ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+                    openItem.set_image(Gtk.Image.new_from_file(icon_location))
                 else:
-		    icon_location="/usr/share/icons/ukui-icon-theme/16x16/devices/"+l.get_symbolic_icon().to_string().split()[4]+".svg"
-		    if (not os.path.exists(icon_location)):
-		        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    icon_location="/usr/share/icons/ukui-icon-theme/16x16/devices/"+l.get_symbolic_icon().to_string().split()[4]+".svg"
+                    if (not os.path.exists(icon_location)):
+                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
         			filename=l.get_icon().to_string(), 
 	        		width=16, 
         			height=16, 
 	        		preserve_aspect_ratio=True)
-			icon = Gtk.Image.new_from_pixbuf(pixbuf)
-			icon1 = Gtk.Image.new_from_pixbuf(pixbuf)
-	                ejectItem.set_image(icon)
-	        	openItem.set_image(icon1)
-		    else:
-	                ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
-	                openItem.set_image(Gtk.Image.new_from_file(icon_location))
+                        icon = Gtk.Image.new_from_pixbuf(pixbuf)
+                        icon1 = Gtk.Image.new_from_pixbuf(pixbuf)
+                        ejectItem.set_image(icon)
+                        openItem.set_image(icon1)
+                    else:
+                        ejectItem.set_image(Gtk.Image.new_from_file(icon_location))
+                        openItem.set_image(Gtk.Image.new_from_file(icon_location))
                 settings = Gtk.Settings.get_default()
-	        settings.set_property("gtk-menu-images", True)
+                settings.set_property("gtk-menu-images", True)
                 ejectItem.connect('activate',eject_callback,l,trayIcon)
                 openItem.connect('activate',open_callback,l)
                 super(Gtk.Menu,trayIcon.left_menu).append(openItem)
                 super(Gtk.Menu, trayIcon.right_menu).append(ejectItem)
                 bHaveMount = True
         #判断是否是重复的路径,重复就置为0，主要针对空白cd盘，会挂载两次的问题
-	for path in paths:
-	    if paths[paths.index(path)]==path1 and paths.count(path1)>1:
-		for path2 in paths:
-	            if paths[paths.index(path2)]==path1:
-			paths[paths.index(path2)]=0
+        for path in paths:
+            if paths[paths.index(path)]==path1 and paths.count(path1)>1:
+                for path2 in paths:
+                    if paths[paths.index(path2)]==path1:
+                        paths[paths.index(path2)]=0
 
     if trayIcon.eject == DISKSTATUSICON:
        trayIcon.eject=SYSTEM
@@ -283,12 +283,12 @@ def button_press_callback(statuIcon,event,trayIcon):
 
 class TrayIcon :
     def __init__(self):
-        pid = get_process_id("python /usr/bin/diskstatusicon.py")
+        pid = get_process_id("/usr/bin/diskstatusicon")
         pids=pid.split()
         if len(pids) != 1:
             return
         self.dvd_icon_name=""
-	self.eject=SYSTEM
+        self.eject=SYSTEM
         self.statusIcon = Gtk.StatusIcon.new_from_file ("/usr/share/icons/ukui-icon-theme/16x16/devices/drive-removable-media-usb.png")
         self.left_menu = Gtk.Menu.new()
         self.right_menu = Gtk.Menu.new()
