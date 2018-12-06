@@ -44,6 +44,10 @@ GdkColor get_border_color(char *color_name);
 static gboolean draw_border(GtkWidget *widget, GdkEventExpose *event, IndicatorCalendar *d);
 
 bool ischinese = FALSE;
+bool isru = FALSE;
+bool isfr = FALSE;
+bool ispt = FALSE;
+bool ises = FALSE;
 GtkWidget *applet_button;
 IndicatorCalendar::IndicatorCalendar(AppletData *ad) :
     applet(ad->applet),
@@ -59,8 +63,26 @@ IndicatorCalendar::IndicatorCalendar(AppletData *ad) :
     theme.assign(text);
     g_free(text);
     char *lang = getenv("LANG");
-    if (strncmp(lang, "zh_CN", 5) == 0)
+    if (strncmp(lang, "zh_CN", 5) == 0){
 	ischinese = TRUE;
+    } 
+    else if(strncmp(lang, "ru_RU", 5) == 0){
+	isru = TRUE;
+    }
+    else if(strncmp(lang, "fr_FR", 5) == 0){
+	isfr = TRUE;
+    }
+    else if(strncmp(lang, "pt_PT", 5) == 0){
+	ispt = TRUE;
+    }
+    else if(strncmp(lang, "es_ES", 5) == 0){
+	ises = TRUE;
+    }
+    
+        
+
+
+
     g_signal_connect(settings, "changed", G_CALLBACK(settings_changed), this);
 
     _setup_main_window();
@@ -110,8 +132,21 @@ void IndicatorCalendar::_setup_popup_menu()
 {
     menu = gtk_menu_new();
     GtkWidget *item;
-    if (ischinese)
+    if (ischinese){
         item = gtk_menu_item_new_with_label("时间和日期设置");
+    }
+    else if (isru){
+	item = gtk_menu_item_new_with_label("Настройки времени и даты");
+    }
+    else if (isfr){
+	item = gtk_menu_item_new_with_label("Paramètres heure et date");
+    }
+    else if (ispt){
+	item = gtk_menu_item_new_with_label("Configurações de hora e data");
+    }
+    else if (ises){
+	item = gtk_menu_item_new_with_label("Ajustes de hora y fecha");
+    }
     else
         item = gtk_menu_item_new_with_label("Time and date settings");
     gtk_widget_show(item);
@@ -164,8 +199,19 @@ void IndicatorCalendar::_setup_main_window()
 //        html_file_path += file;
         html_file_path += "ukui.html";
     }
-    else
-    {
+    else if(isru){
+        html_file_path += "ukui-ru.html";
+    }
+    else if(isfr){
+        html_file_path += "ukui-fr.html";
+    }
+    else if(ispt){
+        html_file_path += "ukui-pt.html";
+    }
+    else if(ises){
+        html_file_path += "ukui-es.html";
+    }
+    else{
 //	char file[30] = {0};
 //        sprintf(file, "ukui-en.html.%s", color_str);
 //        html_file_path += file;
@@ -393,7 +439,20 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
 //		sprintf(file, "ukui.html.%s", color_str);
 //		html_file_path += file;
             html_file_path += "ukui.html";
-        } else {
+        } 
+    	else if(isru){
+            html_file_path += "ukui-ru.html";
+   	}
+    	else if(isfr){
+            html_file_path += "ukui-fr.html";
+    	}
+        else if(ispt){
+            html_file_path += "ukui-pt.html";
+    	}
+    	else if(ises){
+            html_file_path += "ukui-es.html";
+    	}
+	else {
 //		char file[30] = {0};
 //		sprintf(file, "ukui-en.html.%s", color_str);
 //		html_file_path += file;
@@ -454,25 +513,76 @@ update_time(IndicatorCalendar *d)
         if (ischinese) {
             sprintf(datestr, "%d年%d月%d日星期一", year, month, day);
 	        markup = update_label(d, (char *)("周一"), year, month, day, hour);
-        } else {
+        } 
+	else if (isru){
+	        sprintf(datestr, "%s ПН  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"ПН", year, month, day, hour);
+	}
+	else if (isfr){
+	        sprintf(datestr, "%s mar  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"mar", year, month, day, hour);
+	}
+	else if (ispt){
+	        sprintf(datestr, "%s SEG  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"SEG", year, month, day, hour);
+	}
+	else if (ises){
+	        sprintf(datestr, "%s LUN  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"LUN", year, month, day, hour);
+	}
+	else {
 	        sprintf(datestr, "%s Mon  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	        markup = update_label(d, (char *)"Mon", year, month, day, hour);
-	    }
+	}
     }
     if (week == 2) {
-	    if (ischinese) {
+	if (ischinese) {
 	        markup = update_label(d, (char *)("周二"), year, month, day, hour);
-            sprintf(datestr, "%d年%d月%d日星期二", year, month, day);
-        } else {
+        	sprintf(datestr, "%d年%d月%d日星期二", year, month, day);
+        } 
+	else if (isru){
+	        sprintf(datestr, "%s ВТ  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"ВТ", year, month, day, hour);
+	}
+	else if (isfr){
+	        sprintf(datestr, "%s mer  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"mer", year, month, day, hour);
+	}
+	else if (ispt){
+	        sprintf(datestr, "%s TER  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"TER", year, month, day, hour);
+	}
+	else if (ises){
+	        sprintf(datestr, "%s MAR  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"MAR", year, month, day, hour);
+	}
+	else {
 	        markup = update_label(d, (char *)("Tues"), year, month, day, hour);
 	        sprintf(datestr, "%s Tues  %04d/%02d/%02d", d->time.c_str(), year, month, day);
-	    }
+	}
     }
     if (week == 3) {
 	    if (ischinese) {
             sprintf(datestr, "%d年%d月%d日星期三", year, month, day);
 	        markup = update_label(d, (char *)("周三"), year, month, day, hour);
-	    } else {
+	    } 
+	    else if (isru){
+	        sprintf(datestr, "%s СР  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"СР", year, month, day, hour);
+	    }
+	    else if (isfr){
+	        sprintf(datestr, "%s jeu  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"jeu", year, month, day, hour);
+	    }
+	    else if (ispt){
+	        sprintf(datestr, "%s QUA  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"QUA", year, month, day, hour);
+	    }
+	    else if (ises){
+	        sprintf(datestr, "%s MIE  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"MIE", year, month, day, hour);
+	    }
+	    else {
 	        markup = update_label(d, (char *)("Wed"), year, month, day, hour);
 	        sprintf(datestr, "%s Wed  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    }
@@ -481,7 +591,24 @@ update_time(IndicatorCalendar *d)
 	    if (ischinese) {
 	        markup = update_label(d, (char *)("周四"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期四", year, month, day);
-	    } else {
+	    } 
+	    else if (isru){
+	        sprintf(datestr, "%s ЧТ  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"ЧТ", year, month, day, hour);
+	    }
+	    else if (isfr){
+	        sprintf(datestr, "%s ven  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"ven", year, month, day, hour);
+	    }
+	    else if (ispt){
+	        sprintf(datestr, "%s QUI  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"QUI", year, month, day, hour);
+	    }
+	    else if (ises){
+	        sprintf(datestr, "%s JUE  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"JUE", year, month, day, hour);
+	    }
+	    else {
 	        markup = update_label(d, (char *)("Thur"), year, month, day, hour);
 	        sprintf(datestr, "%s Thur  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    }
@@ -490,7 +617,24 @@ update_time(IndicatorCalendar *d)
 	    if (ischinese) {
 	        markup = update_label(d, (char *)("周五"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期五", year, month, day);
-	    } else {
+	    } 
+	    else if (isru){
+	        sprintf(datestr, "%s ПТ  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"ПТ", year, month, day, hour);
+	    }
+	    else if (isfr){
+	        sprintf(datestr, "%s sam  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"sam", year, month, day, hour);
+	    }
+	    else if (ispt){
+	        sprintf(datestr, "%s SEX  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"SEX", year, month, day, hour);
+	    }
+	    else if (ises){
+	        sprintf(datestr, "%s VIE  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"VIE", year, month, day, hour);
+	    }
+	    else {
 	        markup = update_label(d, (char *)("Fri"), year, month, day, hour);
 	        sprintf(datestr, "%s Fri  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    }
@@ -499,7 +643,24 @@ update_time(IndicatorCalendar *d)
 	    if (ischinese) {
 	        markup = update_label(d, (char *)("周六"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期六", year, month, day);
-	    } else {
+	    } 
+	    else if (isru){
+	        sprintf(datestr, "%s СБ  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"СБ", year, month, day, hour);
+	    }
+	    else if (isfr){
+	        sprintf(datestr, "%s dim  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"dim", year, month, day, hour);
+	    }
+	    else if (ispt){
+	        sprintf(datestr, "%s SAB  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"SAB", year, month, day, hour);
+	    }
+	    else if (ises){
+	        sprintf(datestr, "%s SAB  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"SAB", year, month, day, hour);
+	    }
+	    else {
 	        markup = update_label(d, (char *)("Sat"), year, month, day, hour);
 	        sprintf(datestr, "%s Sat  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    }
@@ -508,7 +669,24 @@ update_time(IndicatorCalendar *d)
 	    if (ischinese) {
 	        markup = update_label(d, (char *)("周日"), year, month, day, hour);
             sprintf(datestr, "%d年%d月%d日星期天", year, month, day);
-	    } else {
+	    } 
+	    else if (isru){
+	        sprintf(datestr, "%s ВС  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"ВС", year, month, day, hour);
+	    }
+	    else if (isfr){
+	        sprintf(datestr, "%s lun  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"lun", year, month, day, hour);
+	    }
+	    else if (ispt){
+	        sprintf(datestr, "%s DOM  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"DOM", year, month, day, hour);
+	    }
+	    else if (ises){
+	        sprintf(datestr, "%s DOM  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)"DOM", year, month, day, hour);
+	    }
+	    else {
 	        markup = update_label(d, (char *)("Sun"), year, month, day, hour);
 	        sprintf(datestr, "%s Sun  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    }
