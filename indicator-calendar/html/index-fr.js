@@ -324,7 +324,6 @@ function create_page(year, month) {
                                      '</span>' +
                                      '<br />' +
                                      '<span class="lunar_part">' +
-                                     lunar_day +
                                      '</span>';
             if (worktime && current_cell.className !== 'day_other_month') {
             //    current_cell.appendChild(worktime);
