@@ -328,39 +328,104 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     }
     sprintf(color_hex,"\#%s%s%s",color_hex_red,color_hex_green,color_hex_blue);
 
-    char *script=g_strdup_printf ("\
+    char *script;
+    if (!strcmp (color_hex, "#080a0c")){
+    	script=g_strdup_printf ("\
 				      document.getElementById('header').style.background='%s';\
 				      document.getElementById('day').style.color='%s';\
+				      document.getElementById('left_pane').style.background='%s';\
+				      document.getElementById('right_pane').style.background='%s';\
+				      var css1 = 'td {position: relative;left: 0;top: 0;border: 1px solid transparent;border-top: 1px solid #262e34;padding: 2px 12px;text-align: center;}';var style1 = document.createElement('style');\
+				      if (style1.styleSheet) {\
+				          style1.styleSheet.cssText = css1;\
+				      } else {\
+                                          style1.appendChild(document.createTextNode(css1));\
+                                      }\
+				      document.getElementsByTagName('td')[0].appendChild(style1);\
+				      var css1 = 'td:active {background: #2b87a8;}';var style1 = document.createElement('style');\
+				      if (style1.styleSheet) {\
+				          style1.styleSheet.cssText = css1;\
+				      } else {\
+                                          style1.appendChild(document.createTextNode(css1));\
+                                      }\
+				      document.getElementsByTagName('td')[0].appendChild(style1);\
+				      var css1 = 'td:hover {border: 1px solid #3593b5}';var style1 = document.createElement('style');\
+				      if (style1.styleSheet) {\
+				          style1.styleSheet.cssText = css1;\
+				      } else {\
+                                          style1.appendChild(document.createTextNode(css1));\
+                                      }\
+				      document.getElementsByTagName('td')[0].appendChild(style1);\
+				      var day_this_month_len=document.getElementsByClassName('day_this_month').length;\
+				      for (var i=0; i<day_this_month_len; i++){\
+				          document.getElementsByClassName('day_this_month')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';\
+				          document.getElementsByClassName('day_this_month')[i].getElementsByClassName('lunar_part ')[0].style.color='#aaaaaa';\
+	    			      }\					  
+				      var day_other_month_len=document.getElementsByClassName('day_other_month').length;\
+				      for (var i=0; i<day_other_month_len; i++){\
+				          document.getElementsByClassName('day_other_month')[i].getElementsByClassName('solar_part')[0].style.color='#777777';\
+				          document.getElementsByClassName('day_other_month')[i].getElementsByClassName('lunar_part ')[0].style.color='#777777';\
+	    			      }\					  
 				      document.getElementsByClassName('effect_button')[0].style.backgroundColor='%s';\
 				      document.getElementsByClassName('effect_button')[1].style.background='%s';\
 				      document.getElementsByClassName('effect_button')[2].style.background='%s';\
 				      document.getElementsByClassName('effect_button')[3].style.backgroundColor='%s';\
 				      document.getElementsByClassName('effect_button')[4].style.background='%s';\
 				      document.getElementsByClassName('effect_button')[5].style.background='%s';\
-				      var css = 'table td:hover{border: 1px solid %s;}';var style = document.createElement('style');\
-				      if (style.styleSheet) {\
-				          style.styleSheet.cssText = css;\
-				      } else {\
-                                          style.appendChild(document.createTextNode(css));\
-                                      }\
-				      document.getElementsByTagName('head')[0].appendChild(style);\
-				      var css = '.day_today{border: 1px solid %s;}';var style = document.createElement('style');\
-				      if (style.styleSheet) {\
-				          style.styleSheet.cssText = css;\
-				      } else {\
-                                          style.appendChild(document.createTextNode(css));\
-                                      }\
-				      document.getElementsByTagName('head')[0].appendChild(style);\
-				      var css = '.day_today:hover{border: 1px solid %s;}';var style = document.createElement('style');\
-				      if (style.styleSheet) {\
-				          style.styleSheet.cssText = css;\
-				      } else {\
-                                          style.appendChild(document.createTextNode(css));\
-                                      }\
-				      document.getElementsByTagName('head')[0].appendChild(style);\
+				      document.getElementById('general_datetime_list').style.padding='5px 6px 20px 5px';\
+				      document.getElementById('general_datetime_list').style.borderBottom ='1px solid #343d45';\
+				      var li_length=document.getElementById('general_datetime_list').getElementsByTagName('li').length;\
+				      for (var i=0;i<li_length; i++){\
+				          document.getElementById('general_datetime_list').getElementsByTagName('li')[i].style.color='#aaaaaa';\
+				      }\
+				      document.getElementById('general_datetime_list').getElementsByTagName('li')[1].style.color='#3593b5';\
+				      var td_length=document.getElementById('hl_table').getElementsByTagName('td').length;\
+				      for (var i=0;i<td_length; i++){\
+				          document.getElementById('hl_table').getElementsByTagName('td')[i].style.color='#aaaaaa';\
+				      }\
+				      document.getElementsByClassName('worktime1')[1].style.background='blue';\
+				      document.getElementsByClassName('worktime1')[1].style.height='15px';\
+				      document.getElementsByClassName('worktime2')[1].style.width='15px';\
+				      document.getElementsByClassName('worktime2')[1].style.height='15px';\
 				      ",\
-				      color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex);
-	webkit_web_view_run_javascript(WEBKIT_WEB_VIEW(d->webview),script,NULL,NULL,NULL);
+				      color_hex,color_hex,"#151a1e","#1f2428",color_hex,color_hex,color_hex,color_hex,color_hex,color_hex);
+    }	
+    else{
+        script=g_strdup_printf ("\
+                                      document.getElementById('header').style.background='%s';\
+                                      document.getElementById('day').style.color='%s';\
+                                      document.getElementsByClassName('effect_button')[0].style.backgroundColor='%s';\
+                                      document.getElementsByClassName('effect_button')[1].style.background='%s';\
+                                      document.getElementsByClassName('effect_button')[2].style.background='%s';\
+                                      document.getElementsByClassName('effect_button')[3].style.backgroundColor='%s';\
+                                      document.getElementsByClassName('effect_button')[4].style.background='%s';\
+                                      document.getElementsByClassName('effect_button')[5].style.background='%s';\
+                                      var css = 'table td:hover{border: 1px solid %s;}';var style = document.createElement('style');\
+                                      if (style.styleSheet) {\
+                                          style.styleSheet.cssText = css;\
+                                      } else {\
+                                          style.appendChild(document.createTextNode(css));\
+                                      }\
+                                      document.getElementsByTagName('head')[0].appendChild(style);\
+                                      var css = '.day_today{border: 1px solid %s;}';var style = document.createElement('style');\
+                                      if (style.styleSheet) {\
+                                          style.styleSheet.cssText = css;\
+                                      } else {\
+                                          style.appendChild(document.createTextNode(css));\
+                                      }\
+                                      document.getElementsByTagName('head')[0].appendChild(style);\
+                                      var css = '.day_today:hover{border: 1px solid %s;}';var style = document.createElement('style');\
+                                      if (style.styleSheet) {\
+                                          style.styleSheet.cssText = css;\
+                                      } else {\
+                                          style.appendChild(document.createTextNode(css));\
+                                      }\
+                                      document.getElementsByTagName('head')[0].appendChild(style);\
+                                      ",\
+                                      color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex,color_hex);	
+    }
+
+    webkit_web_view_run_javascript(WEBKIT_WEB_VIEW(d->webview),script,NULL,NULL,NULL);
 
 
     //WebKitDOMElement *year_div;
@@ -382,6 +447,7 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
         gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonClicked");
 
         gtk_widget_show_all(d->main_window);
+	gtk_widget_set_opacity(d->main_window,0.9);
 //        webkit_web_view_reload(WEBKIT_WEB_VIEW(d->webview));
     } else {
         gtk_widget_set_name (GTK_WIDGET(w),"CalendarButtonRelease");

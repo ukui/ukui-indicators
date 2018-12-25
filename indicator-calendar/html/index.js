@@ -168,8 +168,15 @@ window.onload = function () {
 	var header_id=document.getElementById("header");
 	var header_color=header_id.style.background;
 	var x=document.getElementsByClassName("day_highlight");
-	for (i = 0; i < x.length; i++) {
+	if (header_color == "rgb(8, 10, 12)"){
+	    for (i = 0; i < x.length; i++) {
+	    	x[i].style.backgroundColor = "#2b87a8";
+	    }
+	}
+	else{
+	    for (i = 0; i < x.length; i++) {
 		x[i].style.backgroundColor = header_color;
+	    }
 	}
     });
 
@@ -245,8 +252,15 @@ window.onload = function () {
 	var header_color=header_id.style.background;
 	var x=document.getElementsByClassName("day_today");
 	var i;
-	for (i = 0; i < x.length; i++) {
+	if (header_color == "rgb(8, 10, 12)"){
+	    for (i = 0; i < x.length; i++) {
+		x[i].style.backgroundColor = "#3593b5";
+	    }
+	}
+	else{
+	    for (i = 0; i < x.length; i++) {
 		x[i].style.backgroundColor = header_color;
+	    }
 	}
     });
 
@@ -288,14 +302,22 @@ function create_page(year, month) {
             }
 	    var header_id=document.getElementById("header");
 	    var header_color=header_id.style.background;
-	    var x=document.getElementsByClassName("day_highlight");
-	    for (i = 0; i < x.length; i++) {
-		x[i].style.backgroundColor = "#ffffff";
+	    if (header_color == "rgb(8, 10, 12)"){
+	        var x=document.getElementsByClassName("day_highlight");
+	    	for (i = 0; i < x.length; i++) {
+		    x[i].style.backgroundColor = "#151a1e";
+	        }
 	    }
-	    x=document.getElementsByClassName("day_today");
-	    for (i = 0; i < x.length; i++) {
-	    	x[i].style.backgroundColor = "#ffffff";
+	    else{
+	        var x=document.getElementsByClassName("day_highlight");
+	    	for (i = 0; i < x.length; i++) {
+		    x[i].style.backgroundColor = "#ffffff";
+	        }
 	    }
+	        x=document.getElementsByClassName("day_today");
+	        for (i = 0; i < x.length; i++) {
+	    	    x[i].style.backgroundColor = "#3593b5";
+	        }
             var index = (row - 1) * 7 + column; // [0, 7 * 6 - 1]
             /*
              * 注意判断顺序
@@ -357,6 +379,19 @@ function create_page(year, month) {
     update_right_pane(year, month, highlight_day);
 
     month_stuff = null;
+
+    if (header_color == "rgb(8, 10, 12)"){
+        var day_this_month_len=document.getElementsByClassName('day_this_month').length;
+        for (var i=0; i<day_this_month_len; i++){
+	    document.getElementsByClassName('day_this_month')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';
+            document.getElementsByClassName('day_this_month')[i].getElementsByClassName('lunar_part ')[0].style.color='#aaaaaa';
+        }	
+        var day_other_month_len=document.getElementsByClassName('day_other_month').length;
+        for (var i=0; i<day_other_month_len; i++){
+            document.getElementsByClassName('day_other_month')[i].getElementsByClassName('solar_part')[0].style.color='#777777';
+            document.getElementsByClassName('day_other_month')[i].getElementsByClassName('lunar_part ')[0].style.color='#777777';
+        }  
+    }
 }
 
 function new_month_selected() {
