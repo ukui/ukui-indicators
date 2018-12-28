@@ -329,7 +329,7 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     sprintf(color_hex,"\#%s%s%s",color_hex_red,color_hex_green,color_hex_blue);
 
     char *script;
-    if (!strcmp (color_hex, "#080a0c")){
+    if (!strcmp (color_hex, "#000000")){
     	script=g_strdup_printf ("\
 				      document.getElementById('header').style.background='%s';\
 				      document.getElementById('day').style.color='%s';\
