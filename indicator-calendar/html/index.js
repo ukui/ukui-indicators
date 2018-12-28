@@ -168,7 +168,7 @@ window.onload = function () {
 	var header_id=document.getElementById("header");
 	var header_color=header_id.style.background;
 	var x=document.getElementsByClassName("day_highlight");
-	if (header_color == "rgb(8, 10, 12)"){
+	if (header_color == "rgb(0, 0, 0)"){
 	    for (i = 0; i < x.length; i++) {
 	    	x[i].style.backgroundColor = "#2b87a8";
 	    }
@@ -252,7 +252,7 @@ window.onload = function () {
 	var header_color=header_id.style.background;
 	var x=document.getElementsByClassName("day_today");
 	var i;
-	if (header_color == "rgb(8, 10, 12)"){
+	if (header_color == "rgb(0, 0, 0)"){
 	    for (i = 0; i < x.length; i++) {
 		x[i].style.backgroundColor = "#3593b5";
 	    }
@@ -302,7 +302,7 @@ function create_page(year, month) {
             }
 	    var header_id=document.getElementById("header");
 	    var header_color=header_id.style.background;
-	    if (header_color == "rgb(8, 10, 12)"){
+	    if (header_color == "rgb(0, 0, 0)"){
 	        var x=document.getElementsByClassName("day_highlight");
 	    	for (i = 0; i < x.length; i++) {
 		    x[i].style.backgroundColor = "#151a1e";
@@ -380,7 +380,7 @@ function create_page(year, month) {
 
     month_stuff = null;
 
-    if (header_color == "rgb(8, 10, 12)"){
+    if (header_color == "rgb(0, 0, 0)"){
         var day_this_month_len=document.getElementsByClassName('day_this_month').length;
         for (var i=0; i<day_this_month_len; i++){
 	    document.getElementsByClassName('day_this_month')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';
