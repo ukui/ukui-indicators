@@ -124,6 +124,27 @@ function load_hl_script(year) {
 }
 
 window.onload = function () {
+    var checkbox = document.getElementById('checkbox');
+
+    if (localStorage.getItem('hl_table') == "display"){
+            checkbox.setAttribute("checked", true);
+            hl_table.setAttribute("style", "visibility:display");
+    }
+
+    checkbox.onclick = function(){
+        if(this.checked){
+            var hl_table = document.getElementById('hl_table');
+            hl_table.setAttribute("style", "visibility:display");
+
+           localStorage.setItem('hl_table', "display");
+
+        } else{
+            var hl_table = document.getElementById('hl_table');
+           hl_table.setAttribute("style", "visibility:hidden");
+           localStorage.setItem('hl_table', "hidden");
+       }
+    }
+
     "use strict";
 
     load_hl_script(today.getFullYear());

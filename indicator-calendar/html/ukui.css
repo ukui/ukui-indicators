@@ -121,6 +121,10 @@ td:active {
 }
 
 #holiday_button {
+    margin-left: 10px;
+}
+
+#checkbox_div {
     float: right;
 }
 
