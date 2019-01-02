@@ -616,11 +616,23 @@ na_tray_expose_icon (GtkWidget *widget,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
       cairo_save (cr);
-      gdk_cairo_set_source_window (cr,
+      GSettings * panel_orientation = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
+      gchar *tmp = g_settings_get_string(panel_orientation, "orientation");
+      if(g_strcmp0(tmp, "bottom") == 0) {
+        gdk_cairo_set_source_window (cr,
                                    gtk_widget_get_window (widget),
                                    allocation.x,
                                    0);
-      cairo_rectangle (cr, allocation.x, 0, allocation.width, allocation.height);
+        cairo_rectangle (cr, allocation.x, 0, allocation.width, allocation.height);
+      }
+      else {
+        gdk_cairo_set_source_window (cr,
+                                   gtk_widget_get_window (widget),
+                                   0,
+                                   allocation.y);
+        cairo_rectangle (cr, 0, allocation.y, allocation.width, allocation.height);
+      }
+      
       cairo_clip (cr);
 #else
       gdk_cairo_set_source_pixmap (cr,
