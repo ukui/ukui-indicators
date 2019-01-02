@@ -618,7 +618,7 @@ na_tray_expose_icon (GtkWidget *widget,
       cairo_save (cr);
       GSettings * panel_orientation = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
       gchar *tmp = g_settings_get_string(panel_orientation, "orientation");
-      if(g_strcmp0(tmp, "bottom") == 0) {
+      if(g_strcmp0(tmp, "bottom") == 0 || g_strcmp0(tmp, "top") == 0) {
         gdk_cairo_set_source_window (cr,
                                    gtk_widget_get_window (widget),
                                    allocation.x,
