@@ -42,13 +42,20 @@ load_content(AppletData *ad)
         delete desktop;
     desktop = new IndicatorDesktop(ad);
 
-    GtkWidget *hbox=gtk_hbox_new(FALSE, 20);
+    if (ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_UP ||
+        ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_DOWN) {
+        GtkWidget *indicators_box = gtk_hbox_new(FALSE, 20);
+    } else {
+        GtkWidget *indicators_box = gtk_vbox_new(FALSE, 20);
+    }
+    
+    //GtkWidget *hbox=gtk_hbox_new(FALSE, 20);
 
-    gtk_box_pack_start(GTK_BOX(hbox), apps->event_box, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), calendar->event_box, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(indicators_box), apps->event_box, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(indicators_box), calendar->event_box, FALSE, FALSE, 0);
 
 
-    gtk_box_pack_start(GTK_BOX(ad->box), hbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(ad->box), indicators_box, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(ad->box), desktop->event_box, FALSE, FALSE, 0);
 }
 
