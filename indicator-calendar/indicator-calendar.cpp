@@ -538,6 +538,15 @@ static void settings_changed(GSettings *settings, gchar *key, IndicatorCalendar 
 gchar *update_label(IndicatorCalendar *d, char *weekday, gint year, gint month, gint day, gint hour)
 {
     gchar *markup = NULL;
+    
+    GSettings * panel_orientation = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
+    gchar *tmp = g_settings_get_string(panel_orientation, "orientation");
+    if(g_strcmp0(tmp, "left") == 0 || g_strcmp0(tmp, "right") == 0) {
+        markup = g_strdup_printf("<span>%s\n%s\n %02d/%02d </span>", d->time.c_str(), weekday, month, day);	
+        return markup;
+    }
+
+	      
     if (ischinese) {
         if (d->use_24h_format == FALSE)
             if (hour > 12)
