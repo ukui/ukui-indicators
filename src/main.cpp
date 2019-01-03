@@ -42,12 +42,14 @@ load_content(AppletData *ad)
         delete desktop;
     desktop = new IndicatorDesktop(ad);
 
-    if (ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_UP ||
-        ukui_panel_applet_get_orient(d->applet) == UKUI_PANEL_APPLET_ORIENT_DOWN) {
-        GtkWidget *indicators_box = gtk_hbox_new(FALSE, 20);
-    } else {
-        GtkWidget *indicators_box = gtk_vbox_new(FALSE, 20);
-    }
+    GtkWidget *indicators_box;   
+	GSettings * panel_orientation = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
+    gchar *tmp = g_settings_get_string(panel_orientation, "orientation");
+    if(g_strcmp0(tmp, "bottom") == 0 || g_strcmp0(tmp, "top") == 0) {
+		indicators_box = gtk_hbox_new(FALSE, 20);
+	} else {
+		indicators_box = gtk_vbox_new(FALSE, 20);	
+	}
     
     //GtkWidget *hbox=gtk_hbox_new(FALSE, 20);
 
