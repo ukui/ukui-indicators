@@ -128,19 +128,25 @@ window.onload = function () {
 
     if (localStorage.getItem('hl_table') == "display"){
             checkbox.setAttribute("checked", true);
-            hl_table.setAttribute("style", "visibility:display");
+            hl_table.setAttribute("style", "display:block");
+	    var zodiac_icon = document.getElementById('zodiac_icon');
+            zodiac_icon.setAttribute("style", "display:none");
     }
 
     checkbox.onclick = function(){
         if(this.checked){
             var hl_table = document.getElementById('hl_table');
-            hl_table.setAttribute("style", "visibility:display");
+            hl_table.setAttribute("style", "display:block");
+	    var zodiac_icon = document.getElementById('zodiac_icon');
+            zodiac_icon.setAttribute("style", "display:none");
 
            localStorage.setItem('hl_table', "display");
 
         } else{
             var hl_table = document.getElementById('hl_table');
-           hl_table.setAttribute("style", "visibility:hidden");
+           hl_table.setAttribute("style", "display:none");
+	   var zodiac_icon = document.getElementById('zodiac_icon');
+           zodiac_icon.setAttribute("style", "display:block");
            localStorage.setItem('hl_table', "hidden");
        }
     }
