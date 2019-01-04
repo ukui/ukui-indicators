@@ -356,6 +356,16 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
                                           style1.appendChild(document.createTextNode(css1));\
                                       }\
 				      document.getElementsByTagName('td')[0].appendChild(style1);\
+				      var day_highlight_len=document.getElementsByClassName('day_highlight').length;\
+				      for (var i=0; i<day_today_len; i++){\
+				          document.getElementsByClassName('day_highlight')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';\
+				          document.getElementsByClassName('day_highlight')[i].getElementsByClassName('lunar_part ')[0].style.color='#ffffff';\
+	    			      }\					  
+				      var day_today_len=document.getElementsByClassName('day_today').length;\
+				      for (var i=0; i<day_today_len; i++){\
+				          document.getElementsByClassName('day_today')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';\
+				          document.getElementsByClassName('day_today')[i].getElementsByClassName('lunar_part ')[0].style.color='#ffffff';\
+	    			      }\					  
 				      var day_this_month_len=document.getElementsByClassName('day_this_month').length;\
 				      for (var i=0; i<day_this_month_len; i++){\
 				          document.getElementsByClassName('day_this_month')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';\
@@ -383,7 +393,6 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
 				      for (var i=0;i<td_length; i++){\
 				          document.getElementById('hl_table').getElementsByTagName('td')[i].style.color='#aaaaaa';\
 				      }\
-				      document.getElementsByClassName('worktime1')[1].style.background='blue';\
 				      document.getElementsByClassName('worktime1')[1].style.height='15px';\
 				      document.getElementsByClassName('worktime2')[1].style.width='15px';\
 				      document.getElementsByClassName('worktime2')[1].style.height='15px';\

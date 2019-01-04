@@ -199,6 +199,11 @@ window.onload = function () {
 	    for (i = 0; i < x.length; i++) {
 	    	x[i].style.backgroundColor = "#2b87a8";
 	    }
+            var day_highlight_len=document.getElementsByClassName('day_highlight').length;
+            for (var i=0; i<day_today_len; i++){
+                document.getElementsByClassName('day_highlight')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';
+                document.getElementsByClassName('day_highlight')[i].getElementsByClassName('lunar_part ')[0].style.color='#ffffff';
+            }                               
 	}
 	else{
 	    for (i = 0; i < x.length; i++) {
@@ -418,6 +423,12 @@ function create_page(year, month) {
             document.getElementsByClassName('day_other_month')[i].getElementsByClassName('solar_part')[0].style.color='#777777';
             document.getElementsByClassName('day_other_month')[i].getElementsByClassName('lunar_part ')[0].style.color='#777777';
         }  
+        var day_today_len=document.getElementsByClassName('day_today').length;
+        for (var i=0; i<day_today_len; i++){
+            document.getElementsByClassName('day_today')[i].getElementsByClassName('solar_part')[0].style.color='#ffffff';
+            document.getElementsByClassName('day_today')[i].getElementsByClassName('lunar_part ')[0].style.color='#ffffff';
+        }
+	   
     }
 }
 
