@@ -128,7 +128,7 @@ window.onload = function () {
 
     if (localStorage.getItem('hl_table') == "display"){
             checkbox.setAttribute("checked", true);
-            hl_table.setAttribute("style", "display:block");
+	    hl_table.setAttribute("style", "visibility:display");
 	    var zodiac_icon = document.getElementById('zodiac_icon');
             zodiac_icon.setAttribute("style", "display:none");
     }
@@ -136,7 +136,7 @@ window.onload = function () {
     checkbox.onclick = function(){
         if(this.checked){
             var hl_table = document.getElementById('hl_table');
-            hl_table.setAttribute("style", "display:block");
+	    hl_table.setAttribute("style", "visibility:display");
 	    var zodiac_icon = document.getElementById('zodiac_icon');
             zodiac_icon.setAttribute("style", "display:none");
 
@@ -144,9 +144,10 @@ window.onload = function () {
 
         } else{
             var hl_table = document.getElementById('hl_table');
-           hl_table.setAttribute("style", "display:none");
+	   hl_table.setAttribute("style", "visibility:hidden");
 	   var zodiac_icon = document.getElementById('zodiac_icon');
            zodiac_icon.setAttribute("style", "display:block");
+	   zodiac_icon.setAttribute("style", "padding-top: 33px");
            localStorage.setItem('hl_table', "hidden");
        }
     }

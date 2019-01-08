@@ -331,6 +331,13 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     char *script;
     if (!strcmp (color_hex, "#000000")){
     	script=g_strdup_printf ("\
+				      var zodiac_icon = document.getElementById('zodiac_icon');\
+				      zodiac_icon.setAttribute('src', '/usr/share/ukui-indicators/indicator-calendar/html/images/zodiac/black/black-pig.png');\
+				      zodiac_icon.setAttribute('style', 'padding-top: 33px');\
+				      var checkbox = document.getElementById('checkbox');\
+				      if (checkbox.checked){\
+				          zodiac_icon.setAttribute('style', 'display:none');\
+				      }\
 				      document.getElementById('header').style.background='%s';\
 				      document.getElementById('day').style.color='%s';\
 				      document.getElementById('left_pane').style.background='%s';\
@@ -401,6 +408,13 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
     }	
     else{
         script=g_strdup_printf ("\
+				      var zodiac_icon = document.getElementById('zodiac_icon');\
+				      zodiac_icon.setAttribute('src', '/usr/share/ukui-indicators/indicator-calendar/html/images/zodiac/blue/blue-pig.png');\
+				      zodiac_icon.setAttribute('style', 'padding-top: 33px');\
+				      var checkbox = document.getElementById('checkbox');\
+				      if (checkbox.checked){\
+				          zodiac_icon.setAttribute('style', 'display:none');\
+				      }\
                                       document.getElementById('header').style.background='%s';\
                                       document.getElementById('day').style.color='%s';\
                                       document.getElementsByClassName('effect_button')[0].style.backgroundColor='%s';\
