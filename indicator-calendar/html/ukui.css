@@ -138,6 +138,7 @@ td:active {
     background: #358db1;
     border: none;
     float: left;
+    font-size: 13px;
 }
 
 .effect_button:hover {
