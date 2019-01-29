@@ -389,20 +389,32 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 	  desktopFile = autostart_desktop_filename;
   }
   else{
-	FILE 	*p;
-	char 	word[100];
-	char 	desktop_path[1000];
-	sprintf(desktop_path,"dpkg -S `which %s`| awk -F ':' '{print $1}' | xargs dpkg -L |grep desktop |sed -n '1p;1q' > /tmp/txt",ch.res_name);
-	system(desktop_path);
-	p = fopen ("/tmp/txt","r");
-	fscanf (p, "%s", &word);
-	fclose (p);
-	desktopFile = word;
-	system ("rm /tmp/txt");
+	char    desktop_path1[1000];
+	sprintf(desktop_path1,"dpkg -S `which %s` >/dev/null 2>&1 > /tmp/txt",ch.res_name);
+	system(desktop_path1);
+
+	char    desktop_path2[1000]={0};
+	FILE *mima;
+	mima=fopen("/tmp/txt","r");
+	fgets(desktop_path2,sizeof(desktop_path2),mima);
+	fclose(mima);
+
+	if(strcmp(desktop_path2,"")){
+		FILE 	*p;
+		char 	word[100];
+		char 	desktop_path[1000];
+		sprintf(desktop_path,"dpkg -S `which %s`| awk -F ':' '{print $1}' | xargs dpkg -L |grep desktop |sed -n '1p;1q' > /tmp/txt",ch.res_name);
+		system(desktop_path);
+		p = fopen ("/tmp/txt","r");
+		fscanf (p, "%s", &word);
+		fclose (p);
+		desktopFile = word;
+		system ("rm /tmp/txt");
+	}
   }
 
   if (desktopFile != NULL && !g_key_file_load_from_file (keyfile, desktopFile, flags, &error)) {
-	  printf("g_key_file_load_from_file error!\n");
+//	  printf("g_key_file_load_from_file error!\n");
   }
   else{
 	  Name = g_key_file_get_locale_string (keyfile, "Desktop Entry","Name", NULL, NULL);
