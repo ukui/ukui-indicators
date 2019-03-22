@@ -1,0 +1,44 @@
+ukui-indicators (1.1.3-1) unstable; urgency=medium
+
+  * Add support for pt, ru, fr, es.
+  * Adjust the theme.
+  * Add the function to hide the 'compatibility and incompatibility".
+  * Bump standards-version to 4.3.0, compat version to 12.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Fri, 04 Jan 2019 16:46:27 +0800
+
+ukui-indicators (1.1.2-1) unstable; urgency=medium
+
+  * Add the support to show disk status.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sat, 22 Sep 2018 18:33:05 +0800
+
+ukui-indicators (1.1.1-1) unstable; urgency=medium
+
+  * Fix in Live session,"time & date" in indicator cannot be opened.
+  * Fix the wrong position problem after resize panel.
+  * Remove the useless print message.
+  * Adjust the style of calendar.
+  * Drop gnome-system-tools. (Closes: #888674)
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Mon, 25 Jun 2018 16:26:43 +0800
+
+ukui-indicators (1.1.0-1) unstable; urgency=medium
+
+  * Update for ukui-panel.
+  * Add gsettings for applet.
+  * Fix wrong application icon size in indicators.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Tue, 27 Feb 2018 10:12:19 +0800
+
+ukui-indicators (1.0.3-2) unstable; urgency=medium
+
+  * Use tracker.d.o team address (Closes: #899911)
+
+ -- Aron Xu <aron@debian.org>  Mon, 09 Jul 2018 14:45:47 +0800
+
+ukui-indicators (1.0.3-1) unstable; urgency=medium
+
+  * Initial release (Closes: #872966)
+
+ -- Aron Xu <aron@debian.org>  Sat, 26 Aug 2017 16:11:48 +0800
