@@ -7,6 +7,7 @@ include_directories(
     ../indicator-application
     ../indicator-calendar
     ../indicator-desktop
+    ../pop
     ${PROJECT_BINARY_DIR}
     ${UKUI_PANEL_APPLET_INCLUDE_DIRS}
     ${GTK_INCLUDE_DIRS})
@@ -16,6 +17,7 @@ target_link_libraries(
     indicator-application
     indicator-calendar
     indicator-desktop
+    pop
     ${UKUI_PANEL_APPLET_LIBRARIES}
     ${GTK_LIBRARIES})
 
