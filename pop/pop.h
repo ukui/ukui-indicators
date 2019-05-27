@@ -23,9 +23,6 @@ public:
     NaTray *tray;
     int icon_size;
 
-    gulong change_size_handler_id;
-    gulong change_background_handler_id;
-
     void set_mainwindow();
 
 private:

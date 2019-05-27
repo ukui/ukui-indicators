@@ -36,34 +36,7 @@ Pop::Pop(AppletData *ad) :
     gtk_container_add(GTK_CONTAINER(button), image);
     gtk_button_set_relief(GTK_BUTTON(button), GTK_RELIEF_NONE);
 
-    GtkCssProvider *provider;
-    GdkDisplay *display;
-    GdkScreen *screen;
     
-    provider = gtk_css_provider_new ();
-    display = gdk_display_get_default ();
-    screen = gdk_display_get_default_screen (display);                                                                                  
-    gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider),    GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-
-    gtk_css_provider_load_from_data (provider,
-                            "*{"
-                            "color:none;"
-                            " }"
-                            " button {"                                   
-                            "   background-color: transparent;"
-                            "   background-image:none;"
-                            "   border: none"
-                            "}"
-                            "{"
-                            " button:hover {"
-                            "   background-image: none;"
-                            " border : none;"
-                            "}" , -1, NULL);
-
-    gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER(provider),GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-    g_object_unref (provider);
 
 
     g_signal_connect(button, "clicked", G_CALLBACK(button_clicked), this);
@@ -124,13 +97,6 @@ void Pop::set_mainwindow()
     }
     g_signal_connect(main_window, "focus-out-event", G_CALLBACK(mainwindow_hide), NULL);
 
-    //event_box = gtk_event_box_new();
-    //gtk_event_box_set_visible_window(GTK_EVENT_BOX(event_box), FALSE);
-    //gtk_container_add(GTK_CONTAINER(main_window), alignment);
-
-
-    //gtk_container_add(GTK_CONTAINER(main_window), alignment);
-    //gtk_widget_show_all(main_window);
 }
 
 
@@ -215,32 +181,9 @@ label_clicked(GtkLabel *label, GSettings *settings)
     } else {
         g_settings_set_boolean(settings, "show", true);
   }
-
-    
-  /*  gboolean show_value = 	g_settings_get_boolean (settings, "show");
-    if(show_value) {
-        g_settings_set_boolean(settings, "show", false);
-        
-    } else {
-        g_settings_set_boolean(settings, "show", true);
-    }*/
 } 
 
 static void mainwindow_hide(GtkWidget *w)
 {
     gtk_widget_hide(w);
 }
-
-
-/*
-applet_name = 		g_settings_get_string (settings, "applet-name");
-			applet_icon = 		g_settings_get_string (settings, "applet-icon");
-			gboolean show_value = 	g_settings_get_boolean (settings, "show");
-			icon = 			gtk_icon_theme_load_icon (icon_theme,
-				    		 		applet_icon,
-				    		 		16,
-				    		 		0,
-				    		 		NULL);
-
-
-*/
