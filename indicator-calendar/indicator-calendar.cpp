@@ -488,7 +488,7 @@ applet_button_clicked(GtkWidget *w, IndicatorCalendar *d)
 
 static void popup_config(GtkAction *action, gpointer user_data)
 {
-    system("ukui-control-center &");
+    system("ukui-control-center -t &");
 }
 
 static gboolean
