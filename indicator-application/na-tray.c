@@ -632,7 +632,11 @@ na_tray_expose_icon (GtkWidget *widget,
                                    allocation.y);
         cairo_rectangle (cr, 0, allocation.y, allocation.width, allocation.height);
       }
-      
+
+      g_object_unref (panel_orientation);
+      if (tmp) {
+        g_free (tmp); 
+      }
       cairo_clip (cr);
 #else
       gdk_cairo_set_source_pixmap (cr,
