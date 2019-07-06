@@ -1,3 +1,12 @@
+ukui-indicators (1.1.5-1) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Fix the memroy leaks in na tray expose event.
+  * Adjust the hover style.
+  * Update the calendar.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sat, 06 Jul 2019 11:58:02 +0800
+
 ukui-indicators (1.1.4-1) experimental; urgency=medium
 
   * Adjust the button size.
