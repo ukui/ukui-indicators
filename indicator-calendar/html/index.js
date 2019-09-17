@@ -258,7 +258,7 @@ window.onload = function () {
             }
 
             year_selector.value = Math.floor(month_offset / 12) + year_range['low'] + '年';
-            month_selector.value = month_offset % 12 === 0 ? 1 : month_offset % 12 + 1 + '月';
+	    month_selector.value = month_offset % 12 === 0 ? 1 + '月' : month_offset % 12 + 1 + '月';
 
             create_page(parseInt(year_selector.value), parseInt(month_selector.value));
         });
