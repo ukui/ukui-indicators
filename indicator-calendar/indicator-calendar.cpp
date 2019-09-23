@@ -894,7 +894,7 @@ static void reposition(GtkWidget *widget, IndicatorCalendar *d)
     int x, y;
     if (d->orientation == GTK_ORIENTATION_HORIZONTAL) {
         if (origin_x + widget_alloc.width > monitor_rect.x + monitor_rect.width)
-            x = monitor_rect.x + monitor_rect.width;
+            x = monitor_rect.x + monitor_rect.width - widget_alloc.width;
         else
             x = origin_x + widget_alloc.width;
 
