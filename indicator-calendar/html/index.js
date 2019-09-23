@@ -285,23 +285,25 @@ window.onload = function () {
 	var header_color=header_id.style.background;
 	var x=document.getElementsByClassName("day_today");
 	var i;
-	if (header_color == "rgb(0, 0, 0)"){
+//	if (header_color == "rgb(0, 0, 0)"){
 	    for (i = 0; i < x.length; i++) {
 		x[i].style.backgroundColor = "#3593b5";
 	    }
+/*
 	}
 	else{
 	    for (i = 0; i < x.length; i++) {
 		x[i].style.backgroundColor = header_color;
 	    }
 	}
+*/
     });
 
     calendar = document.getElementById('calendar_table');
-    create_page(parseInt(year_selector.value), parseInt(month_selector.value));
+    create_page(parseInt(year_selector.value), parseInt(month_selector.value),false);
 }
 
-function create_page(year, month) {
+function create_page(year, month,clear_color=true) {
     if (year < year_range['low'] || year > year_range['high'])
         return;
 
@@ -328,7 +330,7 @@ function create_page(year, month) {
                         return;
                     }
 
-                    create_page(parseInt(year_selector.value), parseInt(month_selector.value));
+                    create_page(parseInt(year_selector.value), parseInt(month_selector.value),false);
                 });
             } else {
                 current_cell = current_row.cells[column];
@@ -349,7 +351,21 @@ function create_page(year, month) {
 	    }
 	        x=document.getElementsByClassName("day_today");
 	        for (i = 0; i < x.length; i++) {
-	    	    x[i].style.backgroundColor = "#3593b5";
+//	    	    x[i].style.backgroundColor = "#3593b5";
+		    if (clear_color == false){
+			x[i].style.backgroundColor = "#3593b5";
+		    }else{
+			var current_month=today.getMonth()+1;
+			if (current_month == month && today.getFullYear() === year){
+				x[i].style.backgroundColor = "#3593b5";
+			} else{
+				if (header_color == "rgb(0, 0, 0)"){
+					x[i].style.backgroundColor = "#151a1e";
+				} else{
+					x[i].style.backgroundColor = "#ffffff";
+				}
+			}
+		    }
 	        }
             var index = (row - 1) * 7 + column; // [0, 7 * 6 - 1]
             /*
