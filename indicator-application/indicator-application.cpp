@@ -82,11 +82,11 @@ static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorAppl
 		break;
 	case 60:
 		gtk_box_set_spacing (GTK_BOX (d->tray->priv->box), 15);
-		d->icon_size = 22;
+		d->icon_size = 32;
 		break;
 	case 80:
 		gtk_box_set_spacing (GTK_BOX (d->tray->priv->box), 20);
-		d->icon_size = 32;
+		d->icon_size = 48;
 		break;
 	default:
 		gtk_box_set_spacing (GTK_BOX (d->tray->priv->box), 10);
