@@ -698,8 +698,8 @@ update_time(IndicatorCalendar *d)
 	        markup = update_label(d, (char *)"JUE", year, month, day, hour);
 	    }
 	    else {
-	        markup = update_label(d, (char *)("Thur"), year, month, day, hour);
-	        sprintf(datestr, "%s Thur  %04d/%02d/%02d", d->time.c_str(), year, month, day);
+	        markup = update_label(d, (char *)("Thu"), year, month, day, hour);
+	        sprintf(datestr, "%s Thu  %04d/%02d/%02d", d->time.c_str(), year, month, day);
 	    }
     }
     if (week == 5) {
