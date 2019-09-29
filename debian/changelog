@@ -1,12 +1,13 @@
-ukui-indicators (1.1.6-1) unstable; urgency=medium
+ukui-indicators (1.1.7-1) unstable; urgency=medium
 
   * New upstream bugfix release.
     - Fix a typo. (LP: #1838594)
     - Add the missing string. (LP: #1836306)
     - Fix the wrong position when have extend screen. (LP: #1838222)
     - Fix the wrong themes. (LP: #1836307)
+    - Fix the wrong position of tooltips. (LP: #1681823)
 
- -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 26 Sep 2019 16:53:15 +0800
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sun, 29 Sep 2019 16:02:11 +0800
 
 ukui-indicators (1.1.5-1) unstable; urgency=medium
 
