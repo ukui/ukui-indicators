@@ -1,7 +1,8 @@
 Source: ukui-indicators
 Section: x11
 Priority: optional
-Maintainer: Kylin Team <team+kylin@tracker.debian.org>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: Aron Xu <aron@debian.org>,
            handsome_feng <jianfengli@ubuntukylin.com>
 Build-Depends: debhelper (>= 12),
@@ -12,6 +13,7 @@ Build-Depends: debhelper (>= 12),
                libwnck-3-dev,
                libukui-panel-applet-dev
 Standards-Version: 4.4.0
+Rules-Requires-Root: no
 Homepage: https://github.com/ukui/ukui-indicators
 Vcs-Git: https://github.com/ukui/ukui-indicators.git
 Vcs-Browser: https://github.com/ukui/ukui-indicators

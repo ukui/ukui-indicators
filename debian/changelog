@@ -1,6 +1,6 @@
-ukui-indicators (1.1.7-1) unstable; urgency=medium
+ukui-indicators (1.1.7-0ubuntu1) eoan; urgency=medium
 
-  * New upstream bugfix release.
+  * Bugfix only:
     - Fix a typo. (LP: #1838594)
     - Add the missing string. (LP: #1836306)
     - Fix the wrong position when have extend screen. (LP: #1838222)
