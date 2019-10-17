@@ -653,6 +653,8 @@ na_tray_expose_icon (GtkWidget *widget,
 						     8);
 			cairo_rectangle (cr, allocation.x, 0, allocation.width-2, allocation.height);
 		}
+		g_object_unref(pixbuf);
+		g_object_unref(pixbuf1);
 	    } else{
                 gdk_cairo_set_source_window (cr,
                                              gtk_widget_get_window (widget),
@@ -676,6 +678,12 @@ na_tray_expose_icon (GtkWidget *widget,
         cairo_rectangle (cr, 0, allocation.y, allocation.width, allocation.height);
       }
 
+      if (res_name){
+	      g_free(res_name);
+      }
+      if (res_class){
+	      g_free(res_class);
+      }
       g_object_unref (panel_orientation);
       if (tmp) {
         g_free (tmp); 
