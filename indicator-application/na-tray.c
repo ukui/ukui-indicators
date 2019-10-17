@@ -601,10 +601,6 @@ na_tray_expose_icon (GtkWidget *widget,
 #endif
 		     gpointer   data)
 {
-  char          *res_name, *res_class;
-  GdkPixbuf 	*pixbuf, *pixbuf1;
-  na_tray_child_get_wm_class (NA_TRAY_CHILD(widget), &res_name, &res_class);
-
   cairo_t *cr = data;
 
   if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
@@ -622,53 +618,12 @@ na_tray_expose_icon (GtkWidget *widget,
       cairo_save (cr);
       GSettings * panel_orientation = g_settings_new_with_path("org.ukui.panel.toplevel", "/org/ukui/panel/toplevels/bottom/");
       gchar *tmp = g_settings_get_string(panel_orientation, "orientation");
-      int size = g_settings_get_int(panel_orientation, "size");
       if(g_strcmp0(tmp, "bottom") == 0 || g_strcmp0(tmp, "top") == 0) {
-	if (res_name != NULL){
-	    if ((!strcmp(res_name,"blueman") || !strcmp(res_name,"ukui-volume-control-applet") || !strcmp(res_name,"ukui-power-manager")) && size == 40){
-		if (!strcmp(res_name,"ukui-power-manager")){
-			pixbuf1 = gdk_pixbuf_get_from_window(gtk_widget_get_window (widget),0, 0, 25,40);
-			pixbuf = gdk_pixbuf_scale_simple(pixbuf1, 16, 20, GDK_INTERP_BILINEAR);
-			gdk_cairo_set_source_pixbuf (cr,
-						     pixbuf,
-						     allocation.x+7,
-						     10);
-			cairo_rectangle (cr, allocation.x+7, 0, allocation.width-2, allocation.height);
-		}
-		if (!strcmp(res_name,"ukui-volume-control-applet")){
-			pixbuf1 = gdk_pixbuf_get_from_window(gtk_widget_get_window (widget),0, 0, 30,40);
-			pixbuf = gdk_pixbuf_scale_simple(pixbuf1, 24, 26, GDK_INTERP_BILINEAR);
-			gdk_cairo_set_source_pixbuf (cr,
-					             pixbuf,
-						     allocation.x+5,
-						     8);
-			cairo_rectangle (cr, allocation.x+5, 0, allocation.width-2, allocation.height);
-		}
-		if (!strcmp(res_name,"blueman")){
-			pixbuf1 = gdk_pixbuf_get_from_window(gtk_widget_get_window (widget),0, 0, 30,40);
-			pixbuf = gdk_pixbuf_scale_simple(pixbuf1, 20, 24, GDK_INTERP_BILINEAR);
-			gdk_cairo_set_source_pixbuf (cr,
-					             pixbuf,
-						     allocation.x,
-						     8);
-			cairo_rectangle (cr, allocation.x, 0, allocation.width-2, allocation.height);
-		}
-		g_object_unref(pixbuf);
-		g_object_unref(pixbuf1);
-	    } else{
-                gdk_cairo_set_source_window (cr,
-                                             gtk_widget_get_window (widget),
-					     allocation.x,
-					     0);
-		cairo_rectangle (cr, allocation.x, 0, allocation.width, allocation.height);
-	    }
-	} else{
-            gdk_cairo_set_source_window (cr,
-                                         gtk_widget_get_window (widget),
-					 allocation.x,
-					 0);
-            cairo_rectangle (cr, allocation.x, 0, allocation.width, allocation.height);
-	}
+        gdk_cairo_set_source_window (cr,
+                                   gtk_widget_get_window (widget),
+                                   allocation.x,
+                                   0);
+        cairo_rectangle (cr, allocation.x, 0, allocation.width, allocation.height);
       }
       else {
         gdk_cairo_set_source_window (cr,
@@ -678,12 +633,6 @@ na_tray_expose_icon (GtkWidget *widget,
         cairo_rectangle (cr, 0, allocation.y, allocation.width, allocation.height);
       }
 
-      if (res_name){
-	      g_free(res_name);
-      }
-      if (res_class){
-	      g_free(res_class);
-      }
       g_object_unref (panel_orientation);
       if (tmp) {
         g_free (tmp); 

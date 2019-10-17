@@ -75,10 +75,6 @@ IndicatorApplication::~IndicatorApplication()
 
 static void applet_size_changed(UkuiPanelApplet* applet, int size, IndicatorApplication *d)
 {
-    if (size == 40){
-	gtk_alignment_set_padding(GTK_ALIGNMENT(d->alignment), 0, 0, 0, 0);
-	return;
-    }
     switch (size){
 	case 40:
 		gtk_box_set_spacing (GTK_BOX (d->tray->priv->box), 10);
