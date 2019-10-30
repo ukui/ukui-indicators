@@ -1,6 +1,6 @@
 // LunarCalendar.js currently supports this range
 var year_range = { 'low': 1891, 'high': 2100 };
-var weekdays = [ 'Sun', 'Mon', 'Thes', 'Wed', 'Thu', 'Fri', 'Sat' ];
+var weekdays = [ 'Sun', 'Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat' ];
 var calendar = null;
 var today = new Date();
 var highlight_day = today.getDate(); // 鼠标选中的日期值，范围1-31
