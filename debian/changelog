@@ -1,6 +1,12 @@
 ukui-indicators (1.1.8-1) unstable; urgency=medium
 
   * New upstream release.
+  * debian/{compat,control}
+    - Use debhelper-ompat notation. Bump to DH compat level version 12.
+  * debian/control:
+    - Bump Standards-Version to 4.4.1. No changes needed.
+  * debian/rules:
+    - Add hardening=+all to DEB_BUILD_MAINT_OPTIONS.
 
  -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 31 Oct 2019 15:30:47 +0800
 
