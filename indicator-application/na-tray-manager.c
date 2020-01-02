@@ -279,12 +279,54 @@ tray_widget_show_notify (GSettings             *settings,
 					gchar                 *key,
 					GtkWidget             *child)
 {
+  if (!GTK_IS_WIDGET(child)){
+	return;
+  }
+
   gboolean show = g_settings_get_boolean(settings, "show");
   if(show){
-  	  gtk_widget_show (child);
+	if (!gtk_widget_get_visible(child))
+  		gtk_widget_show (child);
   }else{
-  	  gtk_widget_hide (child);
+	if (gtk_widget_get_visible(child))
+  	  	gtk_widget_hide (child);
   }
+}
+
+static int
+get_tray_num (char *current_name)
+{
+  int 		num=1;
+  char          *path;
+  char        	*name;
+  int 		number;
+
+  GSettings     *settings;
+  path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num);
+  settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
+
+  name=g_settings_get_string (settings,"applet-name");
+
+  if (name != NULL){
+        while(TRUE){
+                if (strcmp(name,"ukui")){
+                        if (!strcmp(name,current_name)){
+                                        g_free(path);
+                                        return num;
+                        }
+                        num ++;
+                        path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num);
+                        settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
+                        name=g_settings_get_string (settings,"applet-name");
+                } else{
+                        g_free(path);
+                        return num;
+                }
+        }
+  }
+
+  g_free(path);
+  return num;
 }
 
 static void
@@ -338,19 +380,11 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
   char        	*res_class;
   char          *path;
   GSettings 	*settings;
+  int            num1;
   na_tray_child_get_wm_class (NA_TRAY_CHILD(child), &res_name, &res_class);
   num = num+1;
-  path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num);
-  settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
-  g_signal_connect (settings,
-		  "changed",
-		  G_CALLBACK (tray_widget_show_notify),
-		  child);
-
-  g_signal_connect (child,
-		  "destroy",
-		  G_CALLBACK (tray_widget_destroy),
-		  settings);
+//  path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num);
+//  settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
 
   GdkDisplay *display;
   display = gdk_screen_get_display (manager->screen);
@@ -396,10 +430,10 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 	char    desktop_path2[1000]={0};
 	FILE *mima;
 	mima=fopen("/tmp/txt","r");
-	fgets(desktop_path2,sizeof(desktop_path2),mima);
-	fclose(mima);
-
-	if(strcmp(desktop_path2,"")){
+	if (mima != NULL){
+	    fgets(desktop_path2,sizeof(desktop_path2),mima);
+	    fclose(mima);
+	    if(strcmp(desktop_path2,"")){
 		FILE 	*p;
 		char 	word[100];
 		char 	desktop_path[1000];
@@ -410,32 +444,58 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 		fclose (p);
 		desktopFile = word;
 		system ("rm /tmp/txt");
-	}
+	    }
+	 } else{
+		gtk_widget_show (child);
+		return;
+	 }
   }
 
   if (desktopFile != NULL && !g_key_file_load_from_file (keyfile, desktopFile, flags, &error)) {
-//	  printf("g_key_file_load_from_file error!\n");
+	  printf("g_key_file_load_from_file error!\n");
+	  gtk_widget_show (child);
+	  return;
   }
   else{
 	  Name = g_key_file_get_locale_string (keyfile, "Desktop Entry","Name", NULL, NULL);
 	  Icon = g_key_file_get_locale_string (keyfile, "Desktop Entry","Icon", NULL, NULL);
   }
 
-  gboolean show = g_settings_get_boolean(settings, "show");
 
   if (Name == NULL){
+	num1 = get_tray_num(ch.res_name);
+	path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num1);
+	settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
 	g_settings_set_string (settings,"applet-name",ch.res_name);
+	g_free(path);
   } else{
+	num1 = get_tray_num(Name);
+	path = g_strdup_printf ("%s%d/","/org/ukui/panel/indicator/tray",num1);
+	settings = g_settings_new_with_path ("org.ukui.panel.indicator.tray",path);
 	g_settings_set_string (settings,"applet-name", Name);
 	g_settings_set_string (settings,"applet-icon", Icon);
+	g_free(path);
   }
-  g_settings_set_int (settings,"number",num);
+  g_settings_set_int (settings,"number",num1);
+
+  g_signal_connect (settings,
+		  "changed",
+		  G_CALLBACK (tray_widget_show_notify),
+		  child);
+
+  g_signal_connect (child,
+		  "destroy",
+		  G_CALLBACK (tray_widget_destroy),
+		  settings);
+
   XFree (ch.res_name);
 
+  gboolean show = g_settings_get_boolean(settings, "show");
+
   if(show){
-  	  gtk_widget_show (child);
+	  gtk_widget_show (GTK_WIDGET(child));
   }else{
-  	  gtk_widget_hide (child);
+	  gtk_widget_hide (GTK_WIDGET(child));
   }
 
 //  gtk_widget_show (child);
