@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Reset Applet Position
+Name[tr]=Uygulama Konumunu Sıfırla
 Name[zh_CN]=Reset Applet Position
 Comment[zh_CN]=Reset Applet Position
 Exec=@INSTALL_LIBEXEC_DIR@/reset_applet_position.py
