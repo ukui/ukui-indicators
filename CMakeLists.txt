@@ -34,6 +34,7 @@ add_subdirectory(src)
 add_subdirectory(indicator-application)
 add_subdirectory(indicator-calendar)
 add_subdirectory(indicator-desktop)
+add_subdirectory(pop)
 
 configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 

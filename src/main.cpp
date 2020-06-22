@@ -20,6 +20,7 @@
 #include "indicator-application.h"
 #include "indicator-calendar.h"
 #include "indicator-desktop.h"
+#include "pop.h"
 
 #include <string>
 
@@ -29,6 +30,8 @@ load_content(AppletData *ad)
     static IndicatorApplication *apps = NULL;
     static IndicatorCalendar *calendar = NULL;
     static IndicatorDesktop *desktop = NULL;
+
+    static Pop *pop = NULL;
 
     if (apps)
         delete apps;
@@ -42,14 +45,55 @@ load_content(AppletData *ad)
         delete desktop;
     desktop = new IndicatorDesktop(ad);
 
+    if(pop)
+        delete pop;
+    pop = new Pop(ad);
+
     GtkWidget *hbox=gtk_hbox_new(FALSE, 20);
 
+    
+    
     gtk_box_pack_start(GTK_BOX(hbox), apps->event_box, FALSE, FALSE, 0);
+    
+    gtk_box_pack_start(GTK_BOX(hbox), pop->event_box, FALSE, FALSE, 0);
+    
     gtk_box_pack_start(GTK_BOX(hbox), calendar->event_box, FALSE, FALSE, 0);
+
+    
 
 
     gtk_box_pack_start(GTK_BOX(ad->box), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(ad->box), desktop->event_box, FALSE, FALSE, 0);
+
+
+    GtkCssProvider *provider;
+    GdkDisplay *display;
+    GdkScreen *screen;
+    
+    provider = gtk_css_provider_new ();
+    display = gdk_display_get_default ();
+    screen = gdk_display_get_default_screen (display);                                                                                  
+    gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider),    GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+
+    gtk_css_provider_load_from_data (provider,
+                            "*{"
+                            "color:none;"
+                            " }"
+                            " button {"                                   
+                            "   background-color: transparent;"
+                            "   background-image:none;"
+                            "   border: none"
+                            "}"
+                            "{"
+                            " button:hover {"
+                            "   background-image: none;"
+                            " border : none;"
+                            "}" , -1, NULL);
+
+    gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER(provider),GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    g_object_unref (provider);
 }
 
 static void
